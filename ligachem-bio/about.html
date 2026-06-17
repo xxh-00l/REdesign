@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — LigaChem Biosciences</title>
+<meta name="description" content="ADC 기술로 암 치료의 미래를 다시 씁니다. LigaChem Biosciences.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & TOKENS ──────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg-a:#F7F6F2;
+  --bg-b:#FFFFFF;
+  --bg-dark:#05070B;
+  --h:#111111;
+  --b:#666666;
+  --c:#999999;
+  --or:#F47A20;
+  --rule:rgba(0,0,0,.08);
+  --pad:clamp(48px,8vw,120px);
+  --mw:1440px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg-a);color:var(--h);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+svg,img{display:block}
+
+/* ── A11Y ─────────────────────────────────────────────────────── */
+.skip{position:absolute;left:8px;top:-60px;z-index:10000;background:var(--or);color:#fff;padding:10px 18px;border-radius:8px;font-size:14px;font-weight:600;transition:top .2s}
+.skip:focus{top:8px}
+:focus-visible{outline:2px solid var(--or);outline-offset:3px}
+
+/* ── LOADER ───────────────────────────────────────────────────── */
+.loader{position:fixed;inset:0;background:#080808;z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .7s,visibility .7s}
+.loader.out{opacity:0;visibility:hidden}
+.loader-label{font-size:13px;font-weight:600;letter-spacing:6px;text-transform:uppercase;color:rgba(255,255,255,.7);position:relative}
+.loader-bar{position:absolute;bottom:-8px;left:0;height:1px;background:var(--or);animation:lbar 1.2s ease forwards}
+@keyframes lbar{from{width:0}to{width:100%}}
+
+/* ── CURSOR ───────────────────────────────────────────────────── */
+.glow{position:fixed;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(244,122,32,.04),transparent);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);mix-blend-mode:multiply;transition:left .08s,top .08s}
+
+/* ── NAV ──────────────────────────────────────────────────────── */
+nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);width:min(1080px,90vw);background:rgba(0,0,0,.35);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:30px;padding:22px 48px;display:flex;align-items:center;justify-content:space-between;z-index:1000;border:1px solid rgba(255,255,255,.1);animation:navIn .8s ease forwards}
+@keyframes navIn{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.nav-logo{display:flex;align-items:center;gap:10px;color:#fff;font-size:16px;font-weight:600;letter-spacing:1px}
+.nav-logo-icon{width:28px;height:18px;display:flex;flex-direction:column;gap:4px}
+.nav-logo-icon span{display:block;height:2px;background:#fff;border-radius:2px}
+.nav-links{display:flex;gap:48px;list-style:none}
+.nav-links a{color:#fff;font-size:16px;font-weight:500;text-transform:capitalize;letter-spacing:.5px;position:relative;transition:opacity .3s}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:#fff;transition:width .3s ease}
+.nav-links a:hover{opacity:.75}
+.nav-links a:hover::after{width:100%}
+.nav-links a[aria-current]{color:var(--or)}
+.nav-links a[aria-current]::after{width:100%;background:var(--or)}
+
+/* ── REVEAL ───────────────────────────────────────────────────── */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .95s cubic-bezier(.16,1,.3,1),transform .95s cubic-bezier(.16,1,.3,1)}
+.rv.on{opacity:1;transform:none}
+.rv-r{opacity:0;transform:translateX(32px);transition:opacity .95s cubic-bezier(.16,1,.3,1),transform .95s cubic-bezier(.16,1,.3,1)}
+.rv-r.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.22s}.d3{transition-delay:.36s}.d4{transition-delay:.52s}.d5{transition-delay:.68s}
+
+/* ── SECTION LABEL ────────────────────────────────────────────── */
+.lbl{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--or);display:flex;align-items:center;gap:10px}
+.lbl::before{content:'';width:20px;height:1px;background:var(--or)}
+
+/* ════════════════════════════════════════════════════════════════
+   § 01  HERO  (dark — unchanged)
+════════════════════════════════════════════════════════════════ */
+.hero{position:relative;height:75vh;min-height:600px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;overflow:hidden;background:#080808}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg video{width:100%;height:100%;object-fit:cover;display:block}
+.hero-overlay{position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:1;pointer-events:none}
+.hero-vignette{position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(8,8,8,.25) 0%,transparent 28%,transparent 50%,rgba(0,0,0,.78) 72%,rgba(0,0,0,.88) 86%,var(--bg-a) 100%)}
+.hero-text{position:relative;z-index:3;text-align:center;padding:0 24px 80px}
+.hero-label{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:20px;opacity:0;animation:fup .7s .8s ease forwards}
+@keyframes fup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.hero-h1{font-size:clamp(52px,8vw,124px);font-weight:700;letter-spacing:-3px;line-height:1;color:#fff;opacity:0;animation:fup .85s 1s ease forwards}
+.hero-h1 em{font-style:normal;color:var(--or)}
+.hero-sub{margin-top:20px;font-size:clamp(15px,1.6vw,20px);color:rgba(255,255,255,.42);font-weight:400;opacity:0;animation:fup .8s 1.2s ease forwards}
+.hero-scroll{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.3);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;opacity:0;animation:fup 1s 1.8s ease forwards}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,rgba(255,255,255,.3),transparent);animation:spulse 2s ease-in-out infinite}
+@keyframes spulse{0%,100%{opacity:.3}50%{opacity:.8}}
+
+/* ════════════════════════════════════════════════════════════════
+   § 02  WHO WE ARE  —  full-viewport 50/50 split
+════════════════════════════════════════════════════════════════ */
+.wwa{display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
+.wwa-text{
+  background:var(--bg-a);
+  padding:160px var(--pad) 140px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.wwa-inner{max-width:560px}
+.wwa-h{
+  font-size:clamp(44px,5.5vw,88px);
+  font-weight:800;letter-spacing:-0.04em;line-height:1.06;
+  color:var(--h);margin:24px 0 40px;
+}
+.wwa-h em{font-style:normal;color:var(--or)}
+.wwa-body{font-size:17px;line-height:1.85;color:var(--b);margin-bottom:64px;max-width:480px}
+.wwa-nums{display:flex;border-top:1px solid var(--rule);padding-top:52px}
+.wn{flex:1}
+.wn+.wn{border-left:1px solid var(--rule);padding-left:32px}
+.wn-val{font-size:clamp(26px,3vw,40px);font-weight:800;letter-spacing:-2px;line-height:1}
+.wn-val em{font-style:normal;color:var(--or)}
+.wn-lbl{font-size:11px;font-weight:600;color:var(--c);margin-top:8px;letter-spacing:.08em;text-transform:uppercase}
+.wwa-visual{position:relative;overflow:hidden}
+.wwa-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+
+/* ════════════════════════════════════════════════════════════════
+   § 03  CONJUALL™ PLATFORM  —  logotype + 3-column system
+════════════════════════════════════════════════════════════════ */
+.platform{background:var(--bg-b);padding:160px var(--pad)}
+.platform-wrap{max-width:var(--mw);margin:0 auto}
+.platform-logotype{
+  font-size:clamp(52px,9.5vw,148px);
+  font-weight:800;letter-spacing:-0.04em;line-height:.95;
+  color:var(--h);margin:20px 0 96px;
+}
+.platform-logotype em{font-style:normal;color:var(--or)}
+.p-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule)}
+.p-col{padding:56px 48px 0 0}
+.p-col+.p-col{border-left:1px solid var(--rule);padding-left:48px;padding-right:0}
+.p-num{font-size:11px;font-weight:700;color:var(--or);letter-spacing:.14em;margin-bottom:36px}
+.p-name{
+  font-size:clamp(28px,3.2vw,48px);
+  font-weight:800;letter-spacing:-0.04em;line-height:1;
+  color:var(--h);margin-bottom:20px;
+}
+.p-desc{font-size:15px;color:var(--b);line-height:1.75;max-width:300px}
+.p-tag{
+  display:inline-block;margin-top:32px;padding-bottom:3px;
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--or);border-bottom:1px solid var(--or);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   § 04  PEOPLE  —  full-viewport 50/50 split
+════════════════════════════════════════════════════════════════ */
+.people{display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
+.people-text{
+  background:var(--bg-a);
+  padding:160px var(--pad) 140px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.people-inner{max-width:520px}
+.people-h{
+  font-size:clamp(40px,5vw,80px);
+  font-weight:800;letter-spacing:-0.04em;line-height:1.06;
+  color:var(--h);margin:24px 0 36px;
+}
+.people-h em{font-style:normal;color:var(--or)}
+.people-body{font-size:17px;line-height:1.85;color:var(--b)}
+.people-visual{position:relative;overflow:hidden}
+.people-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+
+/* ════════════════════════════════════════════════════════════════
+   § 05  GLOBAL TRUST  —  numbers only
+════════════════════════════════════════════════════════════════ */
+.trust{background:var(--bg-b);padding:160px var(--pad)}
+.trust-wrap{max-width:var(--mw);margin:0 auto}
+.trust-h{
+  font-size:clamp(44px,6.5vw,104px);
+  font-weight:800;letter-spacing:-0.04em;line-height:1.0;
+  color:var(--h);margin:20px 0 100px;
+}
+.trust-h em{font-style:normal;color:var(--or)}
+.trust-nums{display:flex;align-items:flex-start;border-top:1px solid var(--rule);padding-top:64px;margin-bottom:100px}
+.tn{flex:1;padding-right:40px}
+.tn+.tn{border-left:1px solid var(--rule);padding-left:48px;padding-right:0}
+.tn-val{
+  font-size:clamp(32px,4.2vw,60px);
+  font-weight:700;letter-spacing:-0.03em;line-height:1;
+}
+.tn-val em{font-style:normal;color:var(--or)}
+.tn-lbl{font-size:13px;font-weight:500;color:var(--c);margin-top:24px;letter-spacing:.02em;line-height:1.5}
+.trust-partners{padding-top:64px;border-top:1px solid var(--rule)}
+.tp-label{font-size:11px;font-weight:700;color:var(--c);letter-spacing:.12em;text-transform:uppercase;margin-bottom:24px}
+.tp-names{font-size:clamp(15px,1.8vw,22px);font-weight:500;color:var(--b);line-height:2;letter-spacing:.01em}
+
+/* ════════════════════════════════════════════════════════════════
+   § 06  VISION + CAREER  —  dark finale, full viewport
+════════════════════════════════════════════════════════════════ */
+.vision{
+  position:relative;
+  background:#080808;
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  padding:200px var(--pad);
+  overflow:hidden;
+}
+.vision::before{
+  content:'';position:absolute;top:0;left:0;right:0;
+  height:220px;
+  background:linear-gradient(to bottom,var(--bg-b),#080808);
+  pointer-events:none;z-index:0;
+}
+.vision::after{
+  content:'';position:absolute;
+  width:900px;height:900px;border-radius:50%;
+  background:radial-gradient(circle,rgba(244,122,32,.05),transparent);
+  left:50%;top:50%;transform:translate(-50%,-50%);
+  pointer-events:none;z-index:0;
+}
+.vision-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto}
+.vision-h{
+  font-size:clamp(64px,11vw,164px);
+  font-weight:800;letter-spacing:-0.04em;line-height:.92;
+  color:#fff;margin:28px 0 56px;
+}
+.vision-h em{font-style:normal;color:var(--or)}
+.vision-sub{font-size:18px;color:rgba(255,255,255,.36);line-height:1.75;max-width:420px;margin:0 auto 72px}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:14px;
+  background:var(--or);color:#fff;
+  font-size:16px;font-weight:700;
+  padding:22px 44px;border-radius:100px;
+  transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s;
+}
+.cta-btn:hover{transform:scale(1.04);box-shadow:0 20px 60px rgba(244,122,32,.4)}
+.cta-btn svg{width:18px;height:18px}
+
+/* ── FOOTER ───────────────────────────────────────────────────── */
+footer{background:var(--bg-dark);padding:80px var(--pad) 40px;color:#fff}
+.ft-wrap{max-width:var(--mw);margin:0 auto}
+.ft{display:grid;grid-template-columns:1fr repeat(3,auto);gap:80px;padding-bottom:60px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:40px}
+.fb{font-size:52px;font-weight:700;color:#fff;letter-spacing:-2px;line-height:1;margin-bottom:20px}
+.ftag{font-size:15px;color:rgba(255,255,255,.4);line-height:1.7;max-width:320px;margin-bottom:36px}
+.fsoc{display:flex;gap:10px}
+.fsc{width:44px;height:44px;background:rgba(255,255,255,.08);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s;cursor:pointer;font-size:16px}
+.fsc:hover{background:rgba(255,255,255,.16)}
+.fc-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px}
+.fc-links{list-style:none;display:flex;flex-direction:column;gap:12px}
+.fc-links a{font-size:14px;color:rgba(255,255,255,.5);transition:color .2s}
+.fc-links a:hover{color:#fff}
+.fcopy{font-size:13px;color:rgba(255,255,255,.22);text-align:center}
+
+/* ── RESPONSIVE ───────────────────────────────────────────────── */
+@media(prefers-reduced-motion:reduce){.rv,.rv-r{opacity:1;transform:none;transition:none}.scroll-line{animation:none}}
+
+@media(max-width:1100px){
+  .wwa,.people{grid-template-columns:1fr}
+  .wwa-visual,.people-visual{height:65vw;min-height:400px;position:relative}
+  .wwa-visual img,.people-visual img{position:absolute}
+  .p-grid{grid-template-columns:1fr}
+  .p-col{padding:48px 0 0}
+  .p-col+.p-col{border-left:none;border-top:1px solid var(--rule);padding-left:0}
+  .trust-nums{flex-wrap:wrap}
+  .tn{min-width:calc(50% - 1px);padding-bottom:48px}
+  .tn+.tn{border-left:none;padding-left:0}
+  .tn:nth-child(2n){border-left:1px solid var(--rule);padding-left:40px}
+  .tn:nth-child(n+3){border-top:1px solid var(--rule);padding-top:48px}
+  .ft{grid-template-columns:1fr 1fr;gap:40px}
+}
+
+@media(max-width:768px){
+  .wwa-text,.people-text{padding:120px var(--pad) 100px}
+  .wwa-nums{flex-direction:column;gap:0}
+  .wn+.wn{border-left:none;padding-left:0;border-top:1px solid var(--rule);padding-top:32px;margin-top:32px}
+  .platform,.trust{padding:120px var(--pad)}
+  .platform-logotype{margin-bottom:60px}
+  .trust-nums{margin-bottom:64px}
+  .vision{padding:160px var(--pad)}
+  nav{padding:16px 24px;border-radius:16px}
+  .nav-links{gap:24px}
+  .nav-links a{font-size:14px}
+  footer{padding:60px var(--pad) 32px}
+  .ft{grid-template-columns:1fr;gap:36px}
+}
+
+@media(max-width:480px){
+  .trust-nums{flex-direction:column}
+  .tn{min-width:100%;padding-bottom:40px}
+  .tn+.tn{border-left:none;padding-left:0;border-top:1px solid var(--rule);padding-top:40px}
+  .tn:nth-child(2n){border-left:none;padding-left:0}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip">본문으로 바로가기</a>
+
+<div class="loader" id="loader">
+  <div class="loader-label">LigaChem Bio<div class="loader-bar"></div></div>
+</div>
+
+<div class="glow" id="glow" aria-hidden="true"></div>
+
+<nav aria-label="주 메뉴">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon" aria-hidden="true"><span></span><span></span><span></span></div>
+    LigaChem
+  </a>
+  <ul class="nav-links">
+    <li><a href="about.html" aria-current="page">About Us</a></li>
+    <li><a href="index.html#technology">Technology</a></li>
+    <li><a href="index.html#pipeline">Pipeline</a></li>
+    <li><a href="index.html#investors">Investors</a></li>
+  </ul>
+</nav>
+
+<main id="main">
+
+<!-- ═══ § 01  HERO ═══ -->
+<section class="hero" aria-label="소개">
+  <div class="hero-bg">
+    <video autoplay muted loop playsinline preload="metadata">
+      <source src="video.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-vignette" aria-hidden="true"></div>
+  <div class="hero-text">
+    <p class="hero-label">LigaChem Biosciences · About Us</p>
+    <h1 class="hero-h1">From Molecule<br>to <em>Life</em></h1>
+    <p class="hero-sub">ADC 기술로 암 치료의 미래를 다시 씁니다.</p>
+  </div>
+  <a href="#wwa" class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></a>
+</section>
+
+<!-- ═══ § 02  WHO WE ARE ═══ -->
+<section class="wwa" id="wwa" aria-labelledby="wwaH">
+  <div class="wwa-text">
+    <div class="wwa-inner">
+      <p class="lbl rv">Who We Are</p>
+      <h2 class="wwa-h rv d1" id="wwaH">ADC의 가능성을<br><em>확신했던</em><br>2006년부터.</h2>
+      <p class="wwa-body rv d2">세계 최고의 제약사들이 리가켐바이오의 기술을 선택했습니다. 그 선택이 지금 환자에게 닿고 있습니다.</p>
+      <div class="wwa-nums rv d3">
+        <div class="wn">
+          <div class="wn-val"><em>2006</em></div>
+          <div class="wn-lbl">창립</div>
+        </div>
+        <div class="wn">
+          <div class="wn-val"><em>18</em>yr</div>
+          <div class="wn-lbl">ADC 전문 연구</div>
+        </div>
+        <div class="wn">
+          <div class="wn-val"><em>20</em>+</div>
+          <div class="wn-lbl">글로벌 파트너십</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wwa-visual rv-r">
+    <img src="sub1.png" alt="LigaChem Biosciences 연구 환경" />
+  </div>
+</section>
+
+<!-- ═══ § 03  CONJUALL™ PLATFORM ═══ -->
+<section class="platform" id="conjuall" aria-labelledby="platformH">
+  <div class="platform-wrap">
+    <p class="lbl rv">ConjuALL™ Platform</p>
+    <h2 class="platform-logotype rv d1" id="platformH">ConjuALL<em>™</em></h2>
+    <div class="p-grid">
+      <div class="p-col rv d2">
+        <p class="p-num">01</p>
+        <h3 class="p-name">Target</h3>
+        <p class="p-desc">암세포 표면의 특정 항원에 정밀하게 결합합니다. 정상 세포 손상 없이 표적만 인식합니다.</p>
+        <span class="p-tag">Precision Targeting</span>
+      </div>
+      <div class="p-col rv d3">
+        <p class="p-num">02</p>
+        <h3 class="p-name">Linker</h3>
+        <p class="p-desc">β-글루쿠로니다제 기반 독자 링커로 혈중 완벽한 안정성을 확보합니다. World ADC Awards 6년 연속.</p>
+        <span class="p-tag">Proprietary Linker</span>
+      </div>
+      <div class="p-col rv d4">
+        <p class="p-num">03</p>
+        <h3 class="p-name">Payload</h3>
+        <p class="p-desc">암세포 내부에서만 선택적으로 독소를 방출합니다. 강력한 세포 사멸 효과, 최소 부작용.</p>
+        <span class="p-tag">Selective Release</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ § 04  PEOPLE ═══ -->
+<section class="people" id="people" aria-labelledby="peopleH">
+  <div class="people-text">
+    <div class="people-inner">
+      <p class="lbl rv">Our People</p>
+      <h2 class="people-h rv d1" id="peopleH">발견의 뒤에는<br>항상<br><em>사람</em>이 있습니다.</h2>
+      <p class="people-body rv d2">기초 연구부터 임상 개발까지, 분야를 초월한 과학자들이 하나의 목표를 향해 움직입니다. 18년의 연구 문화가 만든 혁신.</p>
+    </div>
+  </div>
+  <div class="people-visual rv-r">
+    <img src="sub2.png" alt="LigaChem Biosciences 연구팀" />
+  </div>
+</section>
+
+<!-- ═══ § 05  GLOBAL TRUST ═══ -->
+<section class="trust" id="trust" aria-labelledby="trustH">
+  <div class="trust-wrap">
+    <p class="lbl rv">Global Trust</p>
+    <h2 class="trust-h rv d1" id="trustH">숫자가<br><em>말합니다.</em></h2>
+    <div class="trust-nums rv d2">
+      <div class="tn">
+        <div class="tn-val"><em>2006</em></div>
+        <div class="tn-lbl">창립 연도</div>
+      </div>
+      <div class="tn">
+        <div class="tn-val"><em>6500</em>억<em>+</em></div>
+        <div class="tn-lbl">글로벌 기술이전 규모</div>
+      </div>
+      <div class="tn">
+        <div class="tn-val"><em>20</em>+</div>
+        <div class="tn-lbl">Global Partnerships</div>
+      </div>
+      <div class="tn">
+        <div class="tn-val"><em>14</em>+</div>
+        <div class="tn-lbl">ADC Pipeline</div>
+      </div>
+    </div>
+    <div class="trust-partners rv d3">
+      <p class="tp-label">Partners &amp; Licensees</p>
+      <p class="tp-names">Pfizer · Janssen · Boehringer Ingelheim<br>Amgen · Samsung Biologics · Ono Pharmaceutical</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ § 06  VISION ═══ -->
+<section class="vision" id="vision" aria-labelledby="visionH">
+  <div class="vision-inner">
+    <p class="lbl rv" style="justify-content:center;color:rgba(255,255,255,.3)">
+      <span style="background:rgba(255,255,255,.2);display:inline-block;width:20px;height:1px;vertical-align:middle;margin-right:10px"></span>Vision · Careers
+    </p>
+    <h2 class="vision-h rv d1" id="visionH">Make Cancer<br><em>History.</em></h2>
+    <p class="vision-sub rv d2">ADC의 미래는 지금 리가켐에서 만들어지고 있습니다.</p>
+    <a href="#" class="cta-btn rv d3">
+      지원하기
+      <svg viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="ft-wrap">
+    <div class="ft">
+      <div>
+        <div class="fb">ligachem</div>
+        <p class="ftag">Precision ADC Technology,<br>Transforming the Future of Oncology.</p>
+        <div class="fsoc" aria-hidden="true">
+          <div class="fsc" title="Blog">𝐁</div>
+          <div class="fsc" title="YouTube">▶</div>
+          <div class="fsc" title="Facebook">f</div>
+          <div class="fsc" title="X / Twitter">𝕏</div>
+          <div class="fsc" title="Instagram">◈</div>
+        </div>
+      </div>
+      <div>
+        <p class="fc-title">Technology</p>
+        <ul class="fc-links">
+          <li><a href="index.html#technology">ConjuAll™ 플랫폼</a></li>
+          <li><a href="index.html#technology">Small Molecule ADC</a></li>
+          <li><a href="index.html#technology">Biologic ADC</a></li>
+          <li><a href="index.html#technology">Next Generation ADC</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="fc-title">Knowledge</p>
+        <ul class="fc-links">
+          <li><a href="#">Insights</a></li>
+          <li><a href="#">IR 자료실</a></li>
+          <li><a href="#">ESG 리포트</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="fc-title">Company</p>
+        <ul class="fc-links">
+          <li><a href="index.html#pipeline">Pipeline</a></li>
+          <li><a href="#">Career</a></li>
+          <li><a href="#">개인정보처리방침</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="fcopy">© 2026 LigaChem Biosciences, Inc. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('out'), 1300);
+});
+
+const gl = document.getElementById('glow');
+document.addEventListener('mousemove', e => {
+  gl.style.left = e.clientX + 'px';
+  gl.style.top = e.clientY + 'px';
+}, { passive: true });
+
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  nav.style.background = window.scrollY > 60 ? 'rgba(0,0,0,0.75)' : 'rgba(0,0,0,0.35)';
+}, { passive: true });
+
+
+const revEls = document.querySelectorAll('.rv, .rv-r');
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('on'); ro.unobserve(e.target); }
+  });
+}, { threshold: 0.07, rootMargin: '0px 0px -20px 0px' });
+revEls.forEach(el => ro.observe(el));
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>
+</body>
+</html>

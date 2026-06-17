@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About — CoAsia SEMI</title>
+<meta name="description" content="Samsung Foundry SAFE™ DSP. Arm Approved Design Partner. End-to-end ASIC turnkey delivery." />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --off: #f4f3f0;
+  --gray: #6b6b6b;
+  --gray-lt: #a0a0a0;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--white); color: var(--black); overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; }
+
+/* ─── REVEAL ─── */
+.rv { opacity: 0; transform: translateY(36px); transition: opacity 0.85s cubic-bezier(.22,1,.36,1), transform 0.85s cubic-bezier(.22,1,.36,1); }
+.rv.on { opacity: 1; transform: none; }
+.rv-l { opacity: 0; transform: translateX(-40px); transition: opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1); }
+.rv-l.on { opacity: 1; transform: none; }
+.rv-r { opacity: 0; transform: translateX(40px); transition: opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1); }
+.rv-r.on { opacity: 1; transform: none; }
+.d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; } .d3 { transition-delay: .3s; }
+.d4 { transition-delay: .4s; } .d5 { transition-delay: .5s; }
+
+/* ─── NAV ─── */
+.site-nav {
+  position: fixed; top: 24px; left: 50%; transform: translateX(-50%); z-index: 100;
+  background: #fff; border-radius: 10px; padding: 0 24px;
+  width: 483px; height: 74px; display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+  animation: navDrop 0.7s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes navDrop { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+.nav-left { display: flex; align-items: center; gap: 20px; }
+.nav-logo { font-size: 18px; font-weight: 600; color: var(--black); white-space: nowrap; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 14px; font-weight: 500; color: var(--black); transition: opacity 0.2s; }
+.nav-links a:hover { opacity: 0.5; }
+.nav-hamburger { display: flex; flex-direction: column; justify-content: center; gap: 6px; width: 32px; height: 32px; background: none; border: none; cursor: pointer; padding: 4px; flex-shrink: 0; }
+.nav-hamburger span { display: block; width: 100%; height: 2px; background: var(--black); border-radius: 2px; transition: transform 0.3s cubic-bezier(.22,1,.36,1), opacity 0.3s; transform-origin: center; }
+.nav-hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+.nav-drawer {
+  position: fixed; top: 0; right: 0; width: 300px; height: 100vh; background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(20px); z-index: 99; padding: 100px 48px 60px; display: flex; flex-direction: column;
+  gap: 32px; transform: translateX(100%); transition: transform 0.4s cubic-bezier(.22,1,.36,1); box-shadow: -4px 0 40px rgba(0,0,0,0.08);
+}
+.nav-drawer.open { transform: translateX(0); }
+.nav-drawer a { font-size: 22px; font-weight: 600; color: var(--black); text-transform: capitalize; transition: opacity 0.2s, transform 0.2s; }
+.nav-drawer a:hover { opacity: 0.45; transform: translateX(4px); }
+.nav-drawer a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; }
+.nav-drawer-overlay { position: fixed; inset: 0; z-index: 98; background: rgba(0,0,0,0.2); opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.nav-drawer-overlay.open { opacity: 1; pointer-events: all; }
+
+/* ─── LABEL ─── */
+.lbl { font-size: 11px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--gray-lt); display: flex; align-items: center; gap: 10px; }
+.lbl::before { content: ''; width: 16px; height: 1px; background: currentColor; }
+
+/* ═══════════════════════════════════════════
+   1. HERO
+═══════════════════════════════════════════ */
+.hero { position: relative; width: 100%; height: 100vh; min-height: 700px; overflow: hidden; display: flex; align-items: flex-end; }
+.hero-bg { position: absolute; inset: 0; animation: bgIn 1.6s cubic-bezier(.22,1,.36,1) both; }
+.hero-bg video { width: 100%; height: 100%; object-fit: cover; }
+@keyframes bgIn { from { opacity: 0; transform: scale(1.06); } to { opacity: 1; transform: scale(1); } }
+.hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg, rgba(0,0,0,.82) 0%, rgba(0,0,0,.45) 50%, rgba(0,0,0,.15) 100%); }
+.hero-body { position: relative; z-index: 2; padding: 0 100px 100px; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: flex-end; gap: 80px; }
+.hero-lbl { font-size: 11px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: rgba(255,255,255,.55); margin-bottom: 20px; animation: txtIn 0.9s .3s cubic-bezier(.22,1,.36,1) both; }
+.hero-h1 { font-size: clamp(42px, 5.2vw, 82px); font-weight: 500; color: #fff; line-height: 1.1; animation: txtIn 0.9s .5s cubic-bezier(.22,1,.36,1) both; }
+@keyframes txtIn { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+.hero-certs { display: flex; flex-direction: column; gap: 10px; animation: txtIn 0.9s .9s cubic-bezier(.22,1,.36,1) both; }
+.hero-cert { display: flex; align-items: center; gap: 10px; border: 1px solid rgba(255,255,255,.2); border-radius: 12px; padding: 12px 16px; backdrop-filter: blur(8px); background: rgba(255,255,255,.07); white-space: nowrap; }
+.hero-cert svg { width: 16px; height: 16px; color: #fff; flex-shrink: 0; }
+.hero-cert span { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.9); }
+.hero-scroll { position: absolute; bottom: 40px; left: 100px; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px; animation: txtIn 0.9s 1.3s cubic-bezier(.22,1,.36,1) both; }
+.hero-scroll span { font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.45); }
+.scroll-line { width: 1px; height: 40px; background: rgba(255,255,255,.3); overflow: hidden; position: relative; }
+.scroll-line::after { content: ''; position: absolute; top: -100%; left: 0; width: 1px; height: 100%; background: rgba(255,255,255,.85); animation: scrollTick 2s 1.6s ease-in-out infinite; }
+@keyframes scrollTick { 0% { top: -100%; } 100% { top: 200%; } }
+
+/* ═══════════════════════════════════════════
+   2. ABOUT — image + manifesto
+═══════════════════════════════════════════ */
+.about-strip { display: grid; grid-template-columns: 55% 45%; min-height: 660px; }
+.about-img { position: relative; overflow: hidden; }
+.about-img img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
+}
+.about-text { padding: 100px 80px; display: flex; flex-direction: column; justify-content: center; }
+.about-text .lbl { margin-bottom: 32px; }
+.about-statement { font-size: clamp(26px, 2.8vw, 44px); font-weight: 500; line-height: 1.35; color: rgba(0,0,0,.88); }
+.about-statement b { font-weight: 700; }
+.about-meta { margin-top: 52px; display: flex; gap: 48px; padding-top: 40px; border-top: 1px solid rgba(0,0,0,.08); }
+.about-num { display: flex; flex-direction: column; gap: 4px; }
+.about-num b { font-size: 40px; font-weight: 700; line-height: 1; }
+.about-num span { font-size: 12px; font-weight: 600; color: var(--gray-lt); text-transform: uppercase; letter-spacing: .08em; }
+
+/* ═══════════════════════════════════════════
+   3. TRUSTED BY — partner logos
+═══════════════════════════════════════════ */
+.trusted { padding: 100px 100px; background: var(--black); }
+.trusted .lbl { color: rgba(255,255,255,.3); margin-bottom: 56px; }
+.trusted .lbl::before { background: rgba(255,255,255,.3); }
+.logo-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+.logo-cell {
+  border: 1px solid rgba(255,255,255,.07); padding: 44px 36px;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 24px;
+  transition: background 0.3s;
+}
+.logo-cell:hover { background: rgba(255,255,255,.04); }
+.logo-name { font-size: clamp(20px, 2vw, 30px); font-weight: 700; color: #fff; line-height: 1.1; }
+.logo-tag { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.3); }
+.logo-badge {
+  align-self: flex-start; border: 1px solid rgba(255,255,255,.15); border-radius: 6px;
+  padding: 5px 10px; font-size: 11px; font-weight: 700; color: rgba(255,255,255,.5);
+  letter-spacing: .06em; text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════
+   4. CORE CAPABILITIES — 3 cards
+═══════════════════════════════════════════ */
+.caps { padding: 120px 100px; background: var(--off); }
+.caps-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; }
+.caps-head h2 { font-size: clamp(28px, 3vw, 46px); font-weight: 500; line-height: 1.2; }
+.caps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.cap-card {
+  background: var(--white); border-radius: 24px; padding: 0;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s;
+}
+.cap-card:hover { transform: translateY(-8px); box-shadow: 0 24px 60px rgba(0,0,0,.1); }
+.cap-img {
+  width: 100%; height: 260px;
+  overflow: hidden; flex-shrink: 0;
+}
+.cap-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
+  transition: transform 0.65s cubic-bezier(.22,1,.36,1);
+}
+.cap-card:hover .cap-img img { transform: scale(1.05); }
+.cap-content {
+  padding: 32px 40px 44px;
+  display: flex; flex-direction: column; gap: 16px;
+  flex: 1;
+}
+.cap-num { font-size: 13px; font-weight: 700; color: var(--gray-lt); font-feature-settings: "tnum"; }
+.cap-icon {
+  width: 52px; height: 52px; border-radius: 14px; background: var(--black);
+  display: flex; align-items: center; justify-content: center;
+}
+.cap-icon svg { width: 24px; height: 24px; color: #fff; }
+.cap-content h3 { font-size: 22px; font-weight: 600; line-height: 1.2; }
+.cap-content p { font-size: 15px; line-height: 1.7; color: var(--gray); flex: 1; }
+.cap-proof { display: inline-flex; align-items: baseline; gap: 6px; margin-top: 8px; }
+.cap-proof b { font-size: 30px; font-weight: 700; }
+.cap-proof span { font-size: 12px; font-weight: 600; color: var(--gray-lt); text-transform: uppercase; letter-spacing: .06em; }
+
+/* ═══════════════════════════════════════════
+   5. ENGINEERING PROCESS — flow
+═══════════════════════════════════════════ */
+.process { padding: 140px 100px; background: var(--black); color: #fff; }
+.process-head { max-width: 600px; margin-bottom: 80px; }
+.process-head .lbl { color: rgba(255,255,255,.35); margin-bottom: 24px; }
+.process-head .lbl::before { background: rgba(255,255,255,.25); }
+.process-head h2 { font-size: clamp(26px, 2.8vw, 42px); font-weight: 500; line-height: 1.3; }
+.flow { position: relative; padding-top: 10px; }
+.flow-line { height: 2px; background: rgba(255,255,255,.12); border-radius: 2px; position: relative; overflow: hidden; }
+.flow-line-fill { position: absolute; inset: 0; width: 0%; background: #fff; transition: width 1.8s cubic-bezier(.22,1,.36,1); }
+.flow-stages { display: grid; grid-template-columns: repeat(6, 1fr); margin-top: 28px; }
+.flow-stage-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.2); margin-bottom: 16px; transition: background 0.4s; }
+.flow-stage.is-active .flow-stage-dot { background: #fff; }
+.flow-stage strong { display: block; font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 5px; }
+.flow-stage span { font-size: 12px; color: rgba(255,255,255,.4); line-height: 1.5; }
+
+/* ═══════════════════════════════════════════
+   6. MILESTONES — horizontal timeline
+═══════════════════════════════════════════ */
+.milestones { padding: 120px 100px; overflow: hidden; }
+.milestones-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 72px; }
+.milestones-head h2 { font-size: clamp(28px, 3vw, 46px); font-weight: 500; }
+.timeline { position: relative; }
+.timeline-line { height: 1px; background: rgba(0,0,0,.1); margin-bottom: 0; position: relative; }
+.timeline-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-left: 1px solid rgba(0,0,0,.1); }
+.tcard {
+  padding: 36px 32px; border-right: 1px solid rgba(0,0,0,.08); border-bottom: 1px solid rgba(0,0,0,.08);
+  position: relative; transition: background 0.3s;
+}
+.tcard:hover { background: var(--off); }
+.tcard::before { content: ''; position: absolute; top: -5px; left: 32px; width: 9px; height: 9px; border-radius: 50%; background: var(--black); }
+.tcard-year { font-size: 13px; font-weight: 700; color: var(--gray-lt); margin-bottom: 16px; }
+.tcard-event { font-size: 17px; font-weight: 600; line-height: 1.3; color: var(--black); margin-bottom: 10px; }
+.tcard-desc { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+/* ═══════════════════════════════════════════
+   7. GLOBAL PRESENCE — 5 regions
+═══════════════════════════════════════════ */
+.global { padding: 120px 100px; background: var(--off); }
+.global-head { margin-bottom: 72px; }
+.global-head h2 { font-size: clamp(28px, 3vw, 46px); font-weight: 500; margin-top: 20px; }
+.regions { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; }
+.region {
+  padding: 48px 32px; background: var(--white);
+  border-top: 3px solid transparent;
+  transition: border-color 0.3s, transform 0.3s cubic-bezier(.22,1,.36,1);
+}
+.region:hover { border-color: var(--black); transform: translateY(-4px); }
+.region-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--black); margin-bottom: 24px; }
+.region h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.region p { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+/* ═══════════════════════════════════════════
+   8. CAREER CTA
+═══════════════════════════════════════════ */
+.cta { background: var(--black); color: #fff; padding: 160px 100px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 80px; }
+.cta-left .lbl { color: rgba(255,255,255,.3); margin-bottom: 28px; }
+.cta-left .lbl::before { background: rgba(255,255,255,.25); }
+.cta-h2 { font-size: clamp(32px, 4vw, 62px); font-weight: 500; line-height: 1.15; }
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 14px;
+  background: #fff; color: #000; font-size: 16px; font-weight: 700;
+  padding: 20px 32px; border-radius: 200px; white-space: nowrap;
+  transition: transform 0.3s cubic-bezier(.22,1,.36,1), box-shadow 0.3s;
+}
+.cta-btn:hover { transform: scale(1.04); box-shadow: 0 12px 40px rgba(255,255,255,.15); }
+.cta-arrow { width: 20px; height: 20px; }
+
+/* ─── FOOTER ─── */
+footer { background: var(--black); padding: 80px 100px 40px; color: var(--white); border-top: 1px solid rgba(255,255,255,.06); }
+.footer-top { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: 40px; }
+.footer-logo { font-size: 22px; font-weight: 700; }
+.footer-nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 48px; }
+.footer-col h4 { font-size: 13px; font-weight: 700; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 20px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col a { font-size: 14px; font-weight: 500; color: rgba(255,255,255,.55); transition: color 0.2s; }
+.footer-col a:hover { color: #fff; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-size: 13px; color: rgba(255,255,255,.25); }
+.footer-site { font-size: 13px; color: rgba(255,255,255,.35); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1100px) {
+  .about-strip { grid-template-columns: 1fr; }
+  .about-img { height: 480px; }
+  .logo-row { grid-template-columns: 1fr 1fr; }
+  .caps-grid { grid-template-columns: 1fr; }
+  .flow-stages { grid-template-columns: 1fr 1fr; row-gap: 32px; }
+  .timeline-cards { grid-template-columns: 1fr 1fr; }
+  .regions { grid-template-columns: 1fr 1fr; }
+  .cta { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 768px) {
+  .hero-body { grid-template-columns: 1fr; padding: 0 40px 80px; gap: 28px; }
+  .hero-scroll { left: 40px; }
+  .trusted, .caps, .process, .milestones, .global, .cta { padding-left: 40px; padding-right: 40px; }
+  .about-text { padding: 60px 40px; }
+  .caps-head, .milestones-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .logo-row { grid-template-columns: 1fr; }
+  .regions { grid-template-columns: 1fr; }
+  .timeline-cards { grid-template-columns: 1fr; }
+  footer { padding: 60px 40px 32px; }
+  .footer-nav { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- cursor -->
+<div id="cursorGlow" style="position:fixed;width:280px;height:280px;border-radius:50%;pointer-events:none;z-index:9999;background:radial-gradient(circle,rgba(0,0,0,.04) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .08s,top .08s;mix-blend-mode:multiply;"></div>
+
+<!-- NAV -->
+<header class="site-nav" id="siteNav">
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo">CoAsiaSEMI</a>
+    <ul class="nav-links"><li><a href="index.html">Home</a></li></ul>
+  </div>
+  <button class="nav-hamburger" id="hamburgerBtn" aria-label="메뉴 열기" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+</header>
+
+<div class="nav-drawer-overlay" id="drawerOverlay"></div>
+<div class="nav-drawer" id="navDrawer">
+  <a href="index.html">Home</a>
+  <a href="about.html" aria-current="page">About</a>
+  <a href="index.html#services">Services</a>
+  <a href="index.html#why">Partners</a>
+  <a href="index.html#news">News</a>
+  <a href="index.html#careers">Careers</a>
+  <a href="index.html#esg">ESG</a>
+</div>
+
+<main id="main">
+
+<!-- ═══ 1. HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg">
+    <video autoplay muted loop playsinline><source src="hero.mp4" type="video/mp4" /></video>
+  </div>
+  <div class="hero-body">
+    <div>
+      <p class="hero-lbl">About CoAsia SEMI</p>
+      <h1 class="hero-h1">We turn complex<br>silicon ideas into<br>manufacturable reality.</h1>
+    </div>
+    <div class="hero-certs">
+      <div class="hero-cert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"/></svg>
+        <span>Samsung Foundry SAFE™ DSP</span>
+      </div>
+      <div class="hero-cert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+        <span>Arm Approved Design Partner</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- ═══ 2. ABOUT — image + manifesto ═══ -->
+<section class="about-strip">
+  <div class="about-img">
+    <img src="sub1.png" alt="CoAsia SEMI engineering environment" />
+  </div>
+  <div class="about-text">
+    <p class="lbl rv">Who We Are</p>
+    <p class="about-statement rv d1">
+      We don't manufacture chips.<br>
+      <b>We make sure your chip gets built right</b> — owning every step from specification to shipment.
+    </p>
+    <div class="about-meta">
+      <div class="about-num rv d2"><b>300+</b><span>Engineers</span></div>
+      <div class="about-num rv d3"><b>5nm</b><span>Process Node</span></div>
+      <div class="about-num rv d4"><b>11</b><span>Global Regions</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 3. TRUSTED BY — partner logos ═══ -->
+<section class="trusted">
+  <p class="lbl rv">Trusted By</p>
+  <div class="logo-row">
+    <div class="logo-cell rv">
+      <div>
+        <div class="logo-name">Samsung<br>Foundry</div>
+        <div class="logo-tag">Semiconductor Manufacturing</div>
+      </div>
+      <div class="logo-badge">SAFE™ DSP 2020</div>
+    </div>
+    <div class="logo-cell rv d1">
+      <div>
+        <div class="logo-name">Arm</div>
+        <div class="logo-tag">IP Architecture</div>
+      </div>
+      <div class="logo-badge">Approved Design Partner</div>
+    </div>
+    <div class="logo-cell rv d2">
+      <div>
+        <div class="logo-name">Cadence</div>
+        <div class="logo-tag">EDA Platform</div>
+      </div>
+      <div class="logo-badge">Certified Partner</div>
+    </div>
+    <div class="logo-cell rv d3">
+      <div>
+        <div class="logo-name">Synopsys</div>
+        <div class="logo-tag">EDA & IP</div>
+      </div>
+      <div class="logo-badge">Certified Partner</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 4. CORE CAPABILITIES ═══ -->
+<section class="caps">
+  <div class="caps-head">
+    <p class="lbl rv">Core Capabilities</p>
+    <h2 class="rv d1">The certifications<br>that open doors.</h2>
+  </div>
+  <div class="caps-grid">
+
+    <!-- Card 01 — Samsung Foundry SAFE™ DSP -->
+    <div class="cap-card rv">
+      <div class="cap-img">
+        <img src="sub1.png" alt="Samsung Foundry SAFE™ — advanced wafer fabrication environment" loading="lazy" />
+      </div>
+      <div class="cap-content">
+        <div class="cap-num">01</div>
+        <div class="cap-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"/></svg>
+        </div>
+        <h3>Samsung Foundry<br>SAFE™ DSP</h3>
+        <p>Direct access to advanced process nodes, PDKs, and Samsung design infrastructure — a status fewer than a handful of design houses hold globally.</p>
+        <div class="cap-proof"><b>2020</b><span>Selected</span></div>
+      </div>
+    </div>
+
+    <!-- Card 02 — Arm Approved Design Partner -->
+    <div class="cap-card rv d1">
+      <div class="cap-img">
+        <img src="sub2.png" alt="Arm Approved Design Partner — semiconductor design engineering environment" loading="lazy" />
+      </div>
+      <div class="cap-content">
+        <div class="cap-num">02</div>
+        <div class="cap-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+        </div>
+        <h3>Arm Approved<br>Design Partner</h3>
+        <p>Arm's highest-tier certification. License-safe, silicon-proven access to Arm architecture and IP — without the legal risk your team would otherwise carry alone.</p>
+        <div class="cap-proof"><b>Highest</b><span>Partner Tier</span></div>
+      </div>
+    </div>
+
+    <!-- Card 03 — Turnkey Design Service -->
+    <div class="cap-card rv d2">
+      <div class="cap-img">
+        <img src="sub3.png" alt="Turnkey Design Service — semiconductor packaging and production test process" loading="lazy" />
+      </div>
+      <div class="cap-content">
+        <div class="cap-num">03</div>
+        <div class="cap-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h4"/></svg>
+        </div>
+        <h3>Turnkey Design<br>Service</h3>
+        <p>Spec, SoC design, package, test, QA, and software bring-up — one team, one accountable partner, zero vendor hand-offs.</p>
+        <div class="cap-proof"><b>1</b><span>Partner, Full Flow</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ 5. ENGINEERING PROCESS ═══ -->
+<section class="process">
+  <div class="process-head">
+    <p class="lbl">Engineering Process</p>
+    <h2 class="rv">End-to-end ASIC development.<br>One continuous flow.</h2>
+  </div>
+  <div id="flow" class="rv d1">
+    <div class="flow-line"><div class="flow-line-fill" id="flowFill"></div></div>
+    <div class="flow-stages" id="flowStages">
+      <div class="flow-stage"><div class="flow-stage-dot"></div><strong>Specification</strong><span>Architecture &amp; requirements</span></div>
+      <div class="flow-stage"><div class="flow-stage-dot"></div><strong>SoC Design</strong><span>RTL, synthesis, PnR</span></div>
+      <div class="flow-stage"><div class="flow-stage-dot"></div><strong>Package</strong><span>Advanced &amp; 3D IC</span></div>
+      <div class="flow-stage"><div class="flow-stage-dot"></div><strong>Test</strong><span>Production test dev.</span></div>
+      <div class="flow-stage"><div class="flow-stage-dot"></div><strong>PE / QA</strong><span>Performance assurance</span></div>
+      <div class="flow-stage"><div class="flow-stage-dot"></div><strong>SW / Board</strong><span>Software bring-up</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 6. MILESTONES ═══ -->
+<section class="milestones">
+  <div class="milestones-head">
+    <p class="lbl rv">Milestones</p>
+    <h2 class="rv d1">From certification<br>to first-in-industry.</h2>
+  </div>
+  <div class="timeline">
+    <div class="timeline-line"></div>
+    <div class="timeline-cards">
+      <div class="tcard rv">
+        <div class="tcard-year">2020</div>
+        <div class="tcard-event">Samsung SAFE™ DSP Selected</div>
+        <div class="tcard-desc">Granted direct access to Samsung Foundry's advanced process ecosystem.</div>
+      </div>
+      <div class="tcard rv d1">
+        <div class="tcard-year">2020</div>
+        <div class="tcard-event">Arm Approved Design Partner</div>
+        <div class="tcard-desc">Certified at Arm's highest partner tier within the same year.</div>
+      </div>
+      <div class="tcard rv d2">
+        <div class="tcard-year">2024</div>
+        <div class="tcard-event">300+ Engineering Team</div>
+        <div class="tcard-desc">Scaled design centers across Korea with 5nm process capability.</div>
+      </div>
+      <div class="tcard rv d3">
+        <div class="tcard-year">2026</div>
+        <div class="tcard-event">First 3D IC Shipment in Korea</div>
+        <div class="tcard-desc">First design-service company in Korea to ship a 3D IC packaged SoC globally.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 7. GLOBAL PRESENCE ═══ -->
+<section class="global">
+  <div class="global-head">
+    <p class="lbl rv">Global Presence</p>
+    <h2 class="rv d1">Designed in Korea.<br>Delivered everywhere.</h2>
+  </div>
+  <div class="regions">
+    <div class="region rv">
+      <div class="region-dot"></div>
+      <h3>Korea</h3>
+      <p>Headquarters. Core design &amp; R&amp;D operations.</p>
+    </div>
+    <div class="region rv d1">
+      <div class="region-dot"></div>
+      <h3>China</h3>
+      <p>Foundry coordination &amp; supply chain.</p>
+    </div>
+    <div class="region rv d2">
+      <div class="region-dot"></div>
+      <h3>Taiwan</h3>
+      <p>Semiconductor ecosystem partnerships.</p>
+    </div>
+    <div class="region rv d3">
+      <div class="region-dot"></div>
+      <h3>North America</h3>
+      <p>Customer engagement &amp; business development.</p>
+    </div>
+    <div class="region rv d4">
+      <div class="region-dot"></div>
+      <h3>Europe</h3>
+      <p>Strategic accounts &amp; IP partnerships.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 8. CAREER CTA ═══ -->
+<section class="cta">
+  <div class="cta-left">
+    <p class="lbl">Join the Team</p>
+    <h2 class="cta-h2 rv">Designing what<br>comes next.</h2>
+  </div>
+  <a href="index.html#careers" class="cta-btn rv">
+    Talk to our team
+    <svg class="cta-arrow" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">CoAsiaSEMI</div>
+    <nav class="footer-nav">
+      <div class="footer-col"><h4>About</h4><ul>
+        <li><a href="#main">Who We Are</a></li>
+        <li><a href="about.html">Capabilities</a></li>
+        <li><a href="about.html">Milestones</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Services</h4><ul>
+        <li><a href="index.html#services">ASIC Design</a></li>
+        <li><a href="index.html#services">Packaging</a></li>
+        <li><a href="index.html#services">Turnkey</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Partners</h4><ul>
+        <li><a href="about.html">Samsung Foundry</a></li>
+        <li><a href="about.html">Arm</a></li>
+        <li><a href="about.html">Cadence</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#careers">Careers</a></li>
+        <li><a href="index.html#esg">ESG</a></li>
+      </ul></div>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 CoAsia SEMI. All rights reserved.</p>
+    <p class="footer-site">coasiasemi.com</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ── reveal ── */
+  const rvEls = document.querySelectorAll('.rv, .rv-l, .rv-r');
+  function checkRv() {
+    const vh = window.innerHeight;
+    rvEls.forEach(el => {
+      if (el.classList.contains('on')) return;
+      const r = el.getBoundingClientRect();
+      if (r.top < vh * 0.94 && r.bottom > 0) el.classList.add('on');
+    });
+  }
+  requestAnimationFrame(() => requestAnimationFrame(checkRv));
+  window.addEventListener('scroll', checkRv, { passive: true });
+  window.addEventListener('resize', checkRv, { passive: true });
+
+  /* ── cursor ── */
+  const glow = document.getElementById('cursorGlow');
+  let mx = -999, my = -999;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function tick() { if (glow) { glow.style.left = mx + 'px'; glow.style.top = my + 'px'; } requestAnimationFrame(tick); })();
+
+  /* ── nav scroll ── */
+  const nav = document.getElementById('siteNav');
+  window.addEventListener('scroll', () => {
+    nav.style.boxShadow = window.scrollY > 80
+      ? '0 4px 30px rgba(0,0,0,0.12)'
+      : '0 2px 20px rgba(0,0,0,0.08)';
+  }, { passive: true });
+
+  /* ── hamburger ── */
+  const btn = document.getElementById('hamburgerBtn');
+  const drawer = document.getElementById('navDrawer');
+  const overlay = document.getElementById('drawerOverlay');
+  function toggleDrawer(open) {
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    drawer.classList.toggle('open', open);
+    overlay.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  btn.addEventListener('click', () => toggleDrawer(!drawer.classList.contains('open')));
+  overlay.addEventListener('click', () => toggleDrawer(false));
+  drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleDrawer(false)));
+
+  /* ── flow line ── */
+  const flow = document.getElementById('flow');
+  const flowFill = document.getElementById('flowFill');
+  const flowStages = document.querySelectorAll('.flow-stage');
+  if ('IntersectionObserver' in window && flow) {
+    new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        flowFill.style.width = '100%';
+        flowStages.forEach((s, i) => setTimeout(() => s.classList.add('is-active'), 200 + i * 180));
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0.3 }).observe(flow);
+  }
+
+})();
+</script>
+</body>
+</html>
