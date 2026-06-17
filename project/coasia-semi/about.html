@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About — CoAsia SEMI</title>
+<meta name="description" content="CoAsia SEMI is the ASIC Design Partner global customers trust with their SoC development — Samsung Foundry SAFE™ DSP, Arm Approved Design Partner, end-to-end turnkey delivery." />
+<link rel="canonical" href="https://coasiasemi.com/about" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --gray-light: #f2f1f3;
+  --gray-card: #fafafa;
+  --gray-text: #727272;
+  --gray-sub: #8b8b8b;
+  --gray-dim: #6d6d6d;
+  --navy-dark: #0a0f1e;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+svg { display: block; }
+:focus-visible { outline: 2px solid var(--black); outline-offset: 3px; }
+
+.skip-link {
+  position: absolute; left: 8px; top: -60px; z-index: 10000;
+  background: var(--black); color: #fff; padding: 10px 18px; border-radius: 8px;
+  font-size: 14px; font-weight: 600; transition: top 0.2s ease;
+}
+.skip-link:focus { top: 8px; }
+
+/* ─── ANIMATION BASE (identical to index.html) ─── */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(.22,1,.36,1), transform 0.8s cubic-bezier(.22,1,.36,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-50px); transition: opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1); }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right { opacity: 0; transform: translateX(50px); transition: opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1); }
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+.reveal-scale { opacity: 0; transform: scale(0.92); transition: opacity 0.8s cubic-bezier(.22,1,.36,1), transform 0.8s cubic-bezier(.22,1,.36,1); }
+.reveal-scale.visible { opacity: 1; transform: scale(1); }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+
+/* ─── NAV (identical to index.html) ─── */
+.site-nav {
+  position: fixed; top: 24px; left: 50%; transform: translateX(-50%); z-index: 100;
+  background: #ffffff; backdrop-filter: blur(12px); border-radius: 10px; padding: 0 24px;
+  width: 483px; height: 74px; display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.08); animation: navDrop 0.7s cubic-bezier(.22,1,.36,1) both;
+}
+.nav-left { display: flex; align-items: center; gap: 20px; }
+@keyframes navDrop { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+.nav-logo { font-size: 18px; font-weight: 600; color: var(--black); text-decoration: none; white-space: nowrap; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 14px; font-weight: 500; color: var(--black); text-decoration: none; transition: opacity 0.2s; }
+.nav-links a:hover { opacity: 0.5; }
+.nav-hamburger { display: flex; flex-direction: column; justify-content: center; gap: 6px; width: 32px; height: 32px; background: none; border: none; cursor: pointer; padding: 4px; flex-shrink: 0; }
+.nav-hamburger span { display: block; width: 100%; height: 2px; background: var(--black); border-radius: 2px; transition: transform 0.3s cubic-bezier(.22,1,.36,1), opacity 0.3s; transform-origin: center; }
+.nav-hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+.nav-drawer {
+  position: fixed; top: 0; right: 0; width: 300px; height: 100vh; background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(20px); z-index: 99; padding: 100px 48px 60px; display: flex; flex-direction: column;
+  gap: 32px; transform: translateX(100%); transition: transform 0.4s cubic-bezier(.22,1,.36,1); box-shadow: -4px 0 40px rgba(0,0,0,0.08);
+}
+.nav-drawer.open { transform: translateX(0); }
+.nav-drawer a { font-size: 22px; font-weight: 600; color: var(--black); text-decoration: none; text-transform: capitalize; transition: opacity 0.2s, transform 0.2s; }
+.nav-drawer a:hover { opacity: 0.45; transform: translateX(4px); }
+.nav-drawer a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; }
+.nav-drawer-overlay { position: fixed; inset: 0; z-index: 98; background: rgba(0,0,0,0.2); opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.nav-drawer-overlay.open { opacity: 1; pointer-events: all; }
+
+/* ─── MICRO LABEL (reused from index.html .card-label) ─── */
+.eyebrow {
+  display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-sub); margin-bottom: 20px;
+}
+.eyebrow::before { content: ''; width: 18px; height: 1px; background: var(--gray-sub); }
+
+/* ─── BUTTON (identical to index.html) ─── */
+.btn-join {
+  display: inline-flex; align-items: center; gap: 14px; background: var(--black); color: var(--white);
+  font-size: 17px; font-weight: 600; padding: 20px 32px; border-radius: 200px; border: none; cursor: pointer;
+  text-transform: capitalize; transition: transform 0.3s cubic-bezier(.22,1,.36,1), box-shadow 0.3s; position: relative; overflow: hidden; text-decoration: none;
+}
+.btn-join::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.12); opacity: 0; transition: opacity 0.2s; }
+.btn-join:hover { transform: scale(1.04); box-shadow: 0 12px 36px rgba(0,0,0,0.22); }
+.btn-join:hover::after { opacity: 1; }
+
+/* ─── CARD STYLE (identical surface language to index.html .feature-card, used as inline chips not grids) ─── */
+.chip-card {
+  background: var(--gray-card); border-radius: 20px; padding: 20px 24px; box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  display: inline-flex; flex-direction: column; gap: 4px; transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s;
+}
+.chip-card:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(0,0,0,0.1); }
+.chip-card strong { font-size: 15px; font-weight: 600; color: var(--black); }
+.chip-card span { font-size: 13px; color: var(--gray-sub); }
+
+/* ─── LAYOUT / SPACING (identical scale to index.html) ─── */
+.wrap { padding: 0 100px; }
+section { position: relative; }
+
+@media (max-width: 900px) {
+  .wrap { padding: 0 40px; }
+}
+
+/* ============================================================
+   1. HERO
+   ============================================================ */
+.hero { position: relative; width: 100%; height: 100vh; min-height: 720px; overflow: hidden; display: flex; align-items: center; }
+.hero-bg { position: absolute; inset: 0; transform: scale(1.08); animation: heroBgReveal 1.6s cubic-bezier(.22,1,.36,1) both; overflow: hidden; }
+.hero-bg video { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+@keyframes heroBgReveal { from { transform: scale(1.12); opacity: 0; } to { transform: scale(1.08); opacity: 1; } }
+.hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.15) 100%); }
+.hero-grid { position: relative; z-index: 2; width: 100%; display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 60px; align-items: end; padding: 0 100px 110px; }
+.hero-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 22px; animation: heroTextReveal 1s 0.3s cubic-bezier(.22,1,.36,1) both; }
+.hero-title { font-size: clamp(44px, 5.4vw, 88px); font-weight: 500; color: var(--white); line-height: 1.12; text-shadow: 0 4px 24px rgba(0,0,0,0.3); animation: heroTextReveal 1s 0.5s cubic-bezier(.22,1,.36,1) both; }
+@keyframes heroTextReveal { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.hero-badges { display: flex; flex-direction: column; gap: 12px; animation: heroTextReveal 1s 0.9s cubic-bezier(.22,1,.36,1) both; }
+.hero-badge { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); backdrop-filter: blur(8px); border-radius: 14px; padding: 14px 18px; }
+.hero-badge svg { width: 18px; height: 18px; color: #fff; flex-shrink: 0; }
+.hero-badge span { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.92); }
+.hero-scroll-hint { position: absolute; bottom: 40px; left: 100px; display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 2; animation: heroTextReveal 1s 1.3s cubic-bezier(.22,1,.36,1) both; }
+.hero-scroll-hint span { font-size: 11px; font-weight: 500; letter-spacing: 2px; color: rgba(255,255,255,0.6); text-transform: uppercase; }
+.scroll-line { width: 1px; height: 40px; background: rgba(255,255,255,0.4); position: relative; overflow: hidden; }
+.scroll-line::after { content: ''; position: absolute; top: -100%; left: 0; width: 1px; height: 100%; background: rgba(255,255,255,0.9); animation: scrollLineAnim 2s 1.5s ease-in-out infinite; }
+@keyframes scrollLineAnim { 0% { top: -100%; } 100% { top: 200%; } }
+
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; padding: 0 40px 80px; gap: 32px; }
+  .hero-scroll-hint { left: 40px; }
+}
+
+/* ============================================================
+   2. WHO WE ARE — manifesto strip (no image, no split)
+   ============================================================ */
+.manifesto { padding: 160px 0 140px; }
+.manifesto-inner { max-width: 1180px; }
+.manifesto-statement { font-size: clamp(28px, 3.4vw, 52px); font-weight: 500; line-height: 1.42; color: rgba(0,0,0,0.88); }
+.manifesto-statement b { font-weight: 700; }
+.manifesto-foot { display: flex; gap: 60px; margin-top: 64px; flex-wrap: wrap; }
+.manifesto-foot-item { max-width: 320px; }
+.manifesto-foot-item strong { display: block; font-size: 15px; font-weight: 600; color: var(--black); margin-bottom: 8px; }
+.manifesto-foot-item span { font-size: 14px; color: var(--gray-sub); line-height: 1.6; }
+
+@media (max-width: 900px) { .manifesto { padding: 100px 0 90px; } }
+
+/* ============================================================
+   3. WHY COASIA SEMI — editorial alternating bands
+   ============================================================ */
+.why-band { border-top: 1px solid rgba(0,0,0,0.08); padding: 90px 0; display: grid; grid-template-columns: 110px 1fr 1fr; gap: 40px; align-items: start; }
+.why-band:nth-child(even) { background: var(--gray-light); }
+.why-num { font-size: 16px; font-weight: 700; color: var(--gray-sub); font-feature-settings: "tnum"; }
+.why-head h3 { font-size: clamp(26px, 2.6vw, 38px); font-weight: 600; color: rgba(0,0,0,0.92); line-height: 1.2; }
+.why-proof { display: inline-flex; align-items: baseline; gap: 6px; margin-top: 18px; }
+.why-proof b { font-size: 28px; font-weight: 700; color: var(--black); }
+.why-proof span { font-size: 13px; font-weight: 600; color: var(--gray-sub); text-transform: uppercase; letter-spacing: 0.06em; }
+.why-body p { font-size: 17px; line-height: 1.75; color: var(--gray-text); max-width: 460px; }
+
+@media (max-width: 900px) {
+  .why-band { grid-template-columns: 1fr; padding: 56px 0; gap: 16px; }
+  .why-body p { max-width: 100%; }
+}
+
+/* ============================================================
+   4. HOW WE DELIVER — single connected flow line
+   ============================================================ */
+.deliver { padding: 140px 0; background: var(--black); color: #fff; }
+.deliver-head { max-width: 640px; margin-bottom: 90px; }
+.deliver-head h2 { font-size: clamp(30px, 3.2vw, 48px); font-weight: 500; line-height: 1.3; color: #fff; }
+.deliver-head .eyebrow { color: rgba(255,255,255,0.45); }
+.deliver-head .eyebrow::before { background: rgba(255,255,255,0.3); }
+.flow { position: relative; padding-top: 10px; }
+.flow-line { position: relative; height: 2px; background: rgba(255,255,255,0.15); border-radius: 2px; overflow: hidden; }
+.flow-line-fill { position: absolute; inset: 0; width: 0%; background: #fff; transition: width 1.6s cubic-bezier(.22,1,.36,1); }
+.flow-stages { display: grid; grid-template-columns: repeat(6, 1fr); margin-top: 28px; }
+.flow-stage { text-align: left; padding-right: 16px; }
+.flow-stage-dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.25); margin-bottom: 16px; transition: background 0.4s; }
+.flow-stage.is-active .flow-stage-dot { background: #fff; }
+.flow-stage strong { display: block; font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 6px; }
+.flow-stage span { font-size: 12.5px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+
+@media (max-width: 900px) {
+  .flow-stages { grid-template-columns: 1fr 1fr; row-gap: 36px; }
+}
+
+/* ============================================================
+   5. PARTNER ECOSYSTEM — radial relationship diagram
+   ============================================================ */
+.ecosystem { padding: 150px 0; overflow: hidden; }
+.eco-head { max-width: 620px; margin-bottom: 80px; }
+.eco-head h2 { font-size: clamp(30px, 3.2vw, 48px); font-weight: 500; line-height: 1.3; }
+.eco-diagram { position: relative; width: 100%; max-width: 880px; height: 760px; margin: 0 auto; }
+.eco-ring { position: absolute; border: 1px dashed rgba(0,0,0,0.1); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.eco-ring--1 { width: 320px; height: 320px; }
+.eco-ring--2 { width: 620px; height: 620px; }
+.eco-center {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 150px; height: 150px;
+  background: var(--black); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  text-align: center; font-size: 14px; font-weight: 700; line-height: 1.3; z-index: 3; box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+.eco-node {
+  position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 2;
+}
+.eco-node-dot { width: 64px; height: 64px; border-radius: 50%; background: var(--white); border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 8px 24px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; text-align: center; padding: 4px; }
+.eco-node--core .eco-node-dot { width: 80px; height: 80px; background: var(--gray-card); font-size: 12px; }
+.eco-node-label { font-size: 11px; color: var(--gray-sub); font-weight: 600; white-space: nowrap; }
+.eco-foot { display: flex; justify-content: center; gap: 56px; margin-top: 70px; flex-wrap: wrap; }
+.eco-foot-item { text-align: center; }
+.eco-foot-item b { display: block; font-size: 32px; font-weight: 700; color: var(--black); }
+.eco-foot-item span { font-size: 13px; color: var(--gray-sub); }
+
+@media (max-width: 900px) {
+  .eco-diagram { height: 560px; transform: scale(0.78); transform-origin: top center; }
+}
+
+/* ============================================================
+   6. TRACK RECORD — narrative chapters
+   ============================================================ */
+.record { padding: 0; }
+.chapter { padding: 110px 0; border-top: 1px solid rgba(0,0,0,0.08); display: grid; grid-template-columns: 220px 1fr; gap: 60px; }
+.chapter-mark { font-size: 13px; font-weight: 700; color: var(--gray-sub); letter-spacing: 0.08em; text-transform: uppercase; }
+.chapter-mark em { display: block; font-style: normal; font-size: 40px; font-weight: 700; color: var(--black); margin-top: 10px; }
+.chapter-title { font-size: clamp(24px, 2.4vw, 34px); font-weight: 600; color: rgba(0,0,0,0.92); margin-bottom: 22px; }
+.chapter-body { font-size: 17px; line-height: 1.8; color: var(--gray-text); max-width: 640px; margin-bottom: 28px; }
+.chapter-chips { display: flex; gap: 14px; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .chapter { grid-template-columns: 1fr; gap: 20px; padding: 70px 0; }
+}
+
+/* ============================================================
+   7. GLOBAL NETWORK — node map, click to reveal
+   ============================================================ */
+.network { padding: 150px 0; background: var(--gray-light); }
+.network-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+.network-head h2 { font-size: clamp(30px, 3.2vw, 48px); font-weight: 500; line-height: 1.3; margin-bottom: 22px; }
+.network-head p { font-size: 16px; color: var(--gray-text); line-height: 1.75; max-width: 420px; margin-bottom: 32px; }
+.network-info { background: var(--white); border-radius: 24px; padding: 28px 30px; min-height: 110px; box-shadow: 0 4px 8px rgba(0,0,0,0.06); transition: opacity 0.3s; }
+.network-info strong { display: block; font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+.network-info span { font-size: 14px; color: var(--gray-sub); line-height: 1.6; }
+.network-map { position: relative; width: 100%; max-width: 540px; margin: 0 auto; }
+.network-map svg { width: 100%; height: auto; }
+.net-node { cursor: pointer; }
+.net-node circle.dot { transition: r 0.25s, fill 0.25s; }
+.net-node.is-active circle.dot { fill: var(--black); }
+.net-node-label { font-size: 11px; font-weight: 700; fill: var(--gray-dim); text-transform: uppercase; letter-spacing: 0.04em; }
+
+@media (max-width: 900px) {
+  .network-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* ============================================================
+   8. FUTURE VISION — closing manifesto, no CTA banner
+   ============================================================ */
+.vision { background: var(--black); color: #fff; padding: 170px 0 130px; text-align: center; }
+.vision-eyebrow { color: rgba(255,255,255,0.4); justify-content: center; }
+.vision-eyebrow::before, .vision-eyebrow::after { background: rgba(255,255,255,0.25); }
+.vision-statement { font-size: clamp(30px, 4.6vw, 68px); font-weight: 500; line-height: 1.25; max-width: 980px; margin: 0 auto; color: #fff; }
+.vision-statement b { font-weight: 700; }
+.vision-strip { display: flex; justify-content: center; gap: 48px; margin: 64px 0 56px; flex-wrap: wrap; color: rgba(255,255,255,0.6); font-size: 14px; font-weight: 600; }
+.vision-strip b { color: #fff; font-weight: 700; }
+.vision .btn-join { background: #fff; color: #000; }
+.vision .btn-join::after { background: rgba(0,0,0,0.06); }
+
+/* ─── FOOTER (identical to index.html) ─── */
+footer { background: var(--black); padding: 80px 100px; color: var(--white); }
+.footer-top { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 60px; }
+.footer-logo { font-size: 22px; font-weight: 600; color: var(--white); }
+.footer-nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 48px; }
+.footer-col h4 { font-size: 17px; font-weight: 600; color: var(--white); margin-bottom: 20px; text-transform: capitalize; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col a { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.55); text-decoration: none; text-transform: capitalize; transition: color 0.2s; }
+.footer-col a:hover { color: rgba(255,255,255,0.9); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+.footer-home { font-size: 30px; font-weight: 600; color: var(--white); text-transform: capitalize; }
+.footer-visit span { display: block; font-size: 18px; font-weight: 600; color: var(--white); letter-spacing: 2px; text-transform: capitalize; margin-bottom: 8px; }
+.footer-visit a { font-size: 40px; font-weight: 600; color: var(--white); text-decoration: underline; text-decoration-thickness: 2px; transition: opacity 0.2s; }
+.footer-visit a:hover { opacity: 0.7; }
+
+@media (max-width: 900px) {
+  footer { padding: 60px 40px; }
+  .footer-nav { grid-template-columns: 1fr 1fr; }
+}
+
+/* ─── CURSOR GLOW (identical to index.html) ─── */
+.cursor-glow { position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 9999; background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%); transform: translate(-50%, -50%); transition: opacity 0.3s; mix-blend-mode: screen; }
+.deliver .cursor-glow, .vision .cursor-glow {}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1; transform: none; transition: none; }
+  .hero-bg, .hero-title, .hero-eyebrow, .hero-badges, .hero-scroll-hint, .scroll-line { animation: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<header class="site-nav" id="siteNav">
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo">CoAsiaSEMI</a>
+    <ul class="nav-links"><li><a href="index.html">Home</a></li></ul>
+  </div>
+  <button class="nav-hamburger" id="hamburgerBtn" aria-label="메뉴 열기" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="nav-drawer-overlay" id="drawerOverlay"></div>
+<div class="nav-drawer" id="navDrawer">
+  <a href="index.html">Home</a>
+  <a href="about.html" aria-current="page">About</a>
+  <a href="#">Services</a>
+  <a href="#">Partners</a>
+  <a href="#">News</a>
+  <a href="#">Careers</a>
+  <a href="#">ESG</a>
+</div>
+
+<main id="main">
+
+  <!-- 1. HERO -->
+  <section class="hero" id="hero" aria-label="Introduction">
+    <div class="hero-bg">
+      <video autoplay muted loop playsinline>
+        <source src="hero.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="hero-grid">
+      <div>
+        <p class="hero-eyebrow">ASIC Design Partner</p>
+        <h1 class="hero-title">The engineering partner<br>global teams trust with<br>their next chip.</h1>
+      </div>
+      <div class="hero-badges">
+        <div class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"/></svg><span>Samsung Foundry SAFE™ DSP</span></div>
+        <div class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg><span>Arm Approved Design Partner</span></div>
+      </div>
+    </div>
+    <div class="hero-scroll-hint"><span>scroll</span><div class="scroll-line"></div></div>
+  </section>
+
+  <!-- 2. WHO WE ARE -->
+  <section class="manifesto" id="who-we-are" aria-labelledby="whoTitle">
+    <div class="wrap manifesto-inner">
+      <p class="eyebrow reveal">Who We Are</p>
+      <p class="manifesto-statement reveal delay-1" id="whoTitle">CoAsia SEMI doesn't manufacture chips. <b>We make sure your chip gets built right</b> — taking on the engineering risk between a customer's idea and working silicon, end to end.</p>
+      <div class="manifesto-foot">
+        <div class="manifesto-foot-item reveal delay-2"><strong>Not a foundry</strong><span>We design, verify, and deliver — Samsung Foundry manufactures.</span></div>
+        <div class="manifesto-foot-item reveal delay-3"><strong>One accountable partner</strong><span>A single team owns the project from spec to shipment.</span></div>
+        <div class="manifesto-foot-item reveal delay-4"><strong>Certified, not self-declared</strong><span>Trust backed by Samsung and Arm — not our own marketing.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. WHY COASIA SEMI -->
+  <section aria-labelledby="whyTitle">
+    <div class="wrap">
+      <div style="padding:80px 0 0;"><p class="eyebrow reveal" id="whyTitle">Why CoAsia SEMI</p></div>
+    </div>
+
+    <div class="why-band">
+      <div class="wrap" style="display:contents;">
+        <div class="why-num reveal">01</div>
+        <div class="why-head reveal-left"><h3>Samsung Foundry<br>SAFE™ DSP</h3><div class="why-proof"><b>2020</b><span>Selected</span></div></div>
+        <div class="why-body reveal-right"><p>Official Design Solution Partner status inside Samsung's SAFE™ ecosystem — direct access to advanced process nodes, PDKs, and design infrastructure most design houses never reach.</p></div>
+      </div>
+    </div>
+
+    <div class="why-band">
+      <div class="wrap" style="display:contents;">
+        <div class="why-num reveal">02</div>
+        <div class="why-head reveal-left"><h3>Arm Approved<br>Design Partner</h3><div class="why-proof"><b>Highest</b><span>Partner Tier</span></div></div>
+        <div class="why-body reveal-right"><p>Arm's top-tier certification means license-safe, silicon-proven access to Arm architecture and IP on every project — without the legal and technical risk customers would otherwise carry alone.</p></div>
+      </div>
+    </div>
+
+    <div class="why-band">
+      <div class="wrap" style="display:contents;">
+        <div class="why-num reveal">03</div>
+        <div class="why-head reveal-left"><h3>Turnkey Design<br>Service</h3><div class="why-proof"><b>1</b><span>Partner, Full Flow</span></div></div>
+        <div class="why-body reveal-right"><p>Specification, SoC design, package, test, QA, and software bring-up — handled by one team. No vendor hand-offs, no gaps for risk to hide in.</p></div>
+      </div>
+    </div>
+
+    <div class="why-band">
+      <div class="wrap" style="display:contents;">
+        <div class="why-num reveal">04</div>
+        <div class="why-head reveal-left"><h3>Advanced<br>Packaging</h3><div class="why-proof"><b>First</b><span>in Korea's DSP Industry</span></div></div>
+        <div class="why-body reveal-right"><p>First design-service company in Korea to ship a 3D IC packaged SoC to a global customer — packaging capability most competitors are still planning for.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. HOW WE DELIVER -->
+  <section class="deliver" id="how-we-deliver" aria-labelledby="deliverTitle">
+    <div class="wrap">
+      <div class="deliver-head">
+        <p class="eyebrow">How We Deliver</p>
+        <h2 id="deliverTitle" class="reveal">End-to-end ASIC development, run as one continuous flow — not six separate vendors.</h2>
+      </div>
+      <div class="flow reveal-scale" id="flow">
+        <div class="flow-line"><div class="flow-line-fill" id="flowFill"></div></div>
+        <div class="flow-stages" id="flowStages">
+          <div class="flow-stage"><div class="flow-stage-dot"></div><strong>Specification</strong><span>Requirement &amp; architecture</span></div>
+          <div class="flow-stage"><div class="flow-stage-dot"></div><strong>SoC Design</strong><span>RTL, synthesis, PnR</span></div>
+          <div class="flow-stage"><div class="flow-stage-dot"></div><strong>Package</strong><span>Advanced &amp; 3D IC</span></div>
+          <div class="flow-stage"><div class="flow-stage-dot"></div><strong>Test</strong><span>Production test dev.</span></div>
+          <div class="flow-stage"><div class="flow-stage-dot"></div><strong>PE / QA</strong><span>Performance assurance</span></div>
+          <div class="flow-stage"><div class="flow-stage-dot"></div><strong>SW / Board</strong><span>Software bring-up</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. PARTNER ECOSYSTEM -->
+  <section class="ecosystem" id="partner-ecosystem" aria-labelledby="ecoTitle">
+    <div class="wrap">
+      <div class="eco-head">
+        <p class="eyebrow reveal">Partner Ecosystem</p>
+        <h2 id="ecoTitle" class="reveal">Two certifications at the core. A global ecosystem around them.</h2>
+      </div>
+      <div class="eco-diagram reveal-scale" role="img" aria-label="CoAsia SEMI at the center of a partner ecosystem: Samsung SAFE DSP and Arm AADP in the inner ring, EDA, packaging, and IP partners in the outer ring">
+        <div class="eco-ring eco-ring--1"></div>
+        <div class="eco-ring eco-ring--2"></div>
+        <div class="eco-center">CoAsia<br>SEMI</div>
+        <div class="eco-node eco-node--core" style="top:20%; left:50%;"><div class="eco-node-dot">Samsung<br>SAFE DSP</div></div>
+        <div class="eco-node eco-node--core" style="top:80%; left:50%;"><div class="eco-node-dot">Arm<br>AADP</div></div>
+        <div class="eco-node" style="top:8%; left:18%;"><div class="eco-node-dot">Cadence</div><div class="eco-node-label">EDA</div></div>
+        <div class="eco-node" style="top:8%; left:82%;"><div class="eco-node-dot">Synopsys</div><div class="eco-node-label">EDA</div></div>
+        <div class="eco-node" style="top:50%; left:4%;"><div class="eco-node-dot">CEVA</div><div class="eco-node-label">IP</div></div>
+        <div class="eco-node" style="top:50%; left:96%;"><div class="eco-node-dot">PLDA</div><div class="eco-node-label">IP</div></div>
+        <div class="eco-node" style="top:92%; left:18%;"><div class="eco-node-dot">ASE</div><div class="eco-node-label">Package</div></div>
+        <div class="eco-node" style="top:92%; left:82%;"><div class="eco-node-dot">JCET</div><div class="eco-node-label">Package</div></div>
+      </div>
+      <div class="eco-foot">
+        <div class="eco-foot-item reveal"><b>2</b><span>Core Certifications</span></div>
+        <div class="eco-foot-item reveal delay-1"><b>15+</b><span>Technology Partners</span></div>
+        <div class="eco-foot-item reveal delay-2"><b>11</b><span>Global Regions</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. TRACK RECORD -->
+  <section class="record" id="track-record" aria-labelledby="recordTitle">
+    <div class="wrap"><div style="padding:80px 0 0;"><p class="eyebrow reveal" id="recordTitle">Track Record</p></div></div>
+
+    <div class="chapter">
+      <div class="wrap" style="display:contents;">
+        <div class="chapter-mark reveal">Chapter<em>01</em></div>
+        <div class="reveal-right">
+          <h3 class="chapter-title">Earning the right to be trusted</h3>
+          <p class="chapter-body">CoAsia SEMI didn't open with a portfolio — it opened with an audit. Samsung Foundry and Arm both evaluate design partners before granting access to their ecosystems. In 2020, within months of each other, both said yes.</p>
+          <div class="chapter-chips"><div class="chip-card"><strong>2020</strong><span>Samsung SAFE™ DSP selected</span></div><div class="chip-card"><strong>2020</strong><span>Arm AADP selected</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter">
+      <div class="wrap" style="display:contents;">
+        <div class="chapter-mark reveal">Chapter<em>02</em></div>
+        <div class="reveal-right">
+          <h3 class="chapter-title">Proving it on harder silicon</h3>
+          <p class="chapter-body">Certification opens the door; advanced-node projects keep it open. Design centers scaled, the engineering team grew past 300, and the process roadmap pushed down to 5nm — the range customers actually need for next-generation SoCs.</p>
+          <div class="chapter-chips"><div class="chip-card"><strong>300+</strong><span>Engineers</span></div><div class="chip-card"><strong>5nm</strong><span>Advanced process capability</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter">
+      <div class="wrap" style="display:contents;">
+        <div class="chapter-mark reveal">Chapter<em>03</em></div>
+        <div class="reveal-right">
+          <h3 class="chapter-title">Shipping what others are still planning</h3>
+          <p class="chapter-body">In 2026, CoAsia SEMI became the first design-service company in Korea to ship a 3D IC packaged SoC to a global customer — the packaging technology the next wave of AI and automotive silicon will be built on.</p>
+          <div class="chapter-chips"><div class="chip-card"><strong>First</strong><span>3D IC shipment, Korea DSP industry</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. GLOBAL NETWORK -->
+  <section class="network" id="global-network" aria-labelledby="networkTitle">
+    <div class="wrap network-grid">
+      <div class="network-head reveal-left">
+        <p class="eyebrow">Global Network</p>
+        <h2 id="networkTitle">One design starts in Korea. It reaches customers everywhere.</h2>
+        <p>Specification and core design happen at our Korea headquarters, then route through regional engineering hubs to meet customers where they build.</p>
+        <div class="network-info" id="networkInfo" aria-live="polite">
+          <strong>Korea — Headquarters</strong>
+          <span>Design centers, management, and primary R&amp;D operations.</span>
+        </div>
+      </div>
+      <div class="network-map reveal-right">
+        <svg viewBox="0 0 480 420" role="img" aria-label="Map diagram of CoAsia SEMI's global engineering network">
+          <g stroke="rgba(0,0,0,0.15)" stroke-width="1.4" fill="none">
+            <line x1="240" y1="210" x2="90" y2="90"/>
+            <line x1="240" y1="210" x2="400" y2="80"/>
+            <line x1="240" y1="210" x2="410" y2="280"/>
+            <line x1="240" y1="210" x2="130" y2="330"/>
+          </g>
+          <g class="net-node is-active" data-name="Korea — Headquarters" data-desc="Design centers, management, and primary R&amp;D operations." tabindex="0" role="button" aria-pressed="true">
+            <circle class="dot" cx="240" cy="210" r="14" fill="#000"/>
+            <text x="240" y="248" text-anchor="middle" class="net-node-label">HQ · Korea</text>
+          </g>
+          <g class="net-node" data-name="North America" data-desc="Customer engagement and business development." tabindex="0" role="button" aria-pressed="false">
+            <circle class="dot" cx="90" cy="90" r="9" fill="#fff" stroke="#000" stroke-width="1.5"/>
+            <text x="90" y="70" text-anchor="middle" class="net-node-label">North America</text>
+          </g>
+          <g class="net-node" data-name="Europe" data-desc="Strategic accounts and ecosystem partnerships." tabindex="0" role="button" aria-pressed="false">
+            <circle class="dot" cx="400" cy="80" r="9" fill="#fff" stroke="#000" stroke-width="1.5"/>
+            <text x="400" y="60" text-anchor="middle" class="net-node-label">Europe</text>
+          </g>
+          <g class="net-node" data-name="China · Taiwan" data-desc="Foundry coordination and supply chain management." tabindex="0" role="button" aria-pressed="false">
+            <circle class="dot" cx="410" cy="280" r="9" fill="#fff" stroke="#000" stroke-width="1.5"/>
+            <text x="410" y="305" text-anchor="middle" class="net-node-label">China · Taiwan</text>
+          </g>
+          <g class="net-node" data-name="Southeast Asia" data-desc="Customer support and regional delivery." tabindex="0" role="button" aria-pressed="false">
+            <circle class="dot" cx="130" cy="330" r="9" fill="#fff" stroke="#000" stroke-width="1.5"/>
+            <text x="130" y="355" text-anchor="middle" class="net-node-label">Southeast Asia</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. FUTURE VISION -->
+  <section class="vision" id="future-vision" aria-labelledby="visionTitle">
+    <div class="wrap">
+      <p class="eyebrow vision-eyebrow reveal" style="justify-content:center;">Future Vision</p>
+      <h2 id="visionTitle" class="vision-statement reveal delay-1">Wherever the next chip begins, <b>CoAsia SEMI is already there.</b></h2>
+      <div class="vision-strip reveal delay-2">
+        <span><b>4+</b> Design Centers</span>
+        <span><b>300+</b> Engineers</span>
+        <span><b>11</b> Global Regions</span>
+      </div>
+      <a href="#" class="btn-join reveal delay-3">Talk to our engineering team →</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">coAsiaSEMI</div>
+    <nav class="footer-nav">
+      <div class="footer-col"><h4>About</h4><ul>
+        <li><a href="#who-we-are">Who We Are</a></li>
+        <li><a href="#track-record">Track Record</a></li>
+        <li><a href="#global-network">Global Network</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Capability</h4><ul>
+        <li><a href="#how-we-deliver">How We Deliver</a></li>
+        <li><a href="#partner-ecosystem">Partner Ecosystem</a></li>
+        <li><a href="#">Automotive</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Partners</h4><ul>
+        <li><a href="#partner-ecosystem">Samsung Foundry</a></li>
+        <li><a href="#partner-ecosystem">Arm</a></li>
+        <li><a href="#">Global OEM</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">ESG</a></li>
+      </ul></div>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-home">Home</div>
+    <div class="footer-visit"><span>Visit us</span><a href="https://coasiasemi.com" target="_blank" rel="noopener">coasiasemi.com</a></div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* Reveal */
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+  function checkReveal() {
+    const vh = window.innerHeight;
+    revealEls.forEach(el => {
+      if (el.classList.contains('visible')) return;
+      const r = el.getBoundingClientRect();
+      if (r.top < vh * 0.96 && r.bottom > 0) el.classList.add('visible');
+    });
+  }
+  requestAnimationFrame(() => requestAnimationFrame(checkReveal));
+  window.addEventListener('scroll', checkReveal, { passive: true });
+  window.addEventListener('resize', checkReveal, { passive: true });
+
+  /* Hero parallax */
+  const heroBg = document.querySelector('.hero-bg');
+  window.addEventListener('scroll', () => {
+    const sy = window.scrollY;
+    if (heroBg) heroBg.style.transform = `scale(1.08) translateY(${sy * 0.2}px)`;
+  }, { passive: true });
+
+  /* Cursor glow */
+  const glow = document.getElementById('cursorGlow');
+  let mx = -999, my = -999;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function tick() { if (glow) { glow.style.left = mx + 'px'; glow.style.top = my + 'px'; } requestAnimationFrame(tick); })();
+
+  /* Nav scroll state */
+  const navEl = document.getElementById('siteNav');
+  window.addEventListener('scroll', () => {
+    navEl.style.boxShadow = window.scrollY > 80 ? '0 4px 30px rgba(0,0,0,0.12)' : '0 2px 20px rgba(0,0,0,0.08)';
+  }, { passive: true });
+
+  /* Hamburger */
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const navDrawer = document.getElementById('navDrawer');
+  const drawerOverlay = document.getElementById('drawerOverlay');
+  function toggleDrawer(open) {
+    hamburgerBtn.classList.toggle('open', open);
+    hamburgerBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    navDrawer.classList.toggle('open', open);
+    drawerOverlay.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hamburgerBtn.addEventListener('click', () => toggleDrawer(!navDrawer.classList.contains('open')));
+  drawerOverlay.addEventListener('click', () => toggleDrawer(false));
+  navDrawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleDrawer(false)));
+
+  /* How We Deliver — flow line draw + stage stagger */
+  const flow = document.getElementById('flow');
+  const flowFill = document.getElementById('flowFill');
+  const flowStages = document.querySelectorAll('.flow-stage');
+  if ('IntersectionObserver' in window && flow) {
+    const flowObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          flowFill.style.width = '100%';
+          flowStages.forEach((s, i) => setTimeout(() => s.classList.add('is-active'), 200 + i * 180));
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    flowObserver.observe(flow);
+  }
+
+  /* Global Network — click/keyboard to reveal node info */
+  const netNodes = document.querySelectorAll('.net-node');
+  const networkInfo = document.getElementById('networkInfo');
+  function activateNode(node) {
+    netNodes.forEach(n => { n.classList.remove('is-active'); n.setAttribute('aria-pressed', 'false'); });
+    node.classList.add('is-active');
+    node.setAttribute('aria-pressed', 'true');
+    networkInfo.querySelector('strong').textContent = node.dataset.name;
+    networkInfo.querySelector('span').textContent = node.dataset.desc;
+  }
+  netNodes.forEach(node => {
+    node.addEventListener('click', () => activateNode(node));
+    node.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateNode(node); } });
+  });
+})();
+</script>
+</body>
+</html>

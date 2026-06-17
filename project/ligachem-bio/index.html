@@ -1,0 +1,2504 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LigaChem Bio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #f9f6f1;
+    --dark: #0a0a0a;
+    --gray: #515151;
+    --light-gray: #898989;
+    --accent: #1a1a1a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #fff;
+    color: #000;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─────────────────────────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1080px, 90vw);
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 30px;
+    padding: 22px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    border: 1px solid rgba(255,255,255,0.1);
+    animation: navSlide 0.8s ease forwards;
+  }
+
+  @keyframes navSlide {
+    from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-decoration: none;
+  }
+
+  .nav-logo-icon {
+    width: 28px;
+    height: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .nav-logo-icon span {
+    display: block;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 48px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+    position: relative;
+    transition: opacity 0.3s;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #fff;
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover { opacity: 0.75; }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ─── HERO ────────────────────────────────────────────────────────── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    background: #0d0d0d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 50% 40%, rgba(255,80,30,0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 50% at 30% 60%, rgba(255,120,50,0.08) 0%, transparent 60%),
+      #0d0d0d;
+    animation: heroBgPulse 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes heroBgPulse {
+    from { opacity: 0.8; }
+    to   { opacity: 1; }
+  }
+
+  /* Antibody SVG illustration */
+  .hero-molecule {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -52%);
+    width: 520px;
+    height: 520px;
+    opacity: 0;
+    animation: moleculeFadeIn 1.4s 0.3s ease forwards;
+  }
+
+  @keyframes moleculeFadeIn {
+    from { opacity: 0; transform: translate(-50%, -48%) scale(0.9); }
+    to   { opacity: 1; transform: translate(-50%, -52%) scale(1); }
+  }
+
+  .molecule-svg {
+    width: 100%;
+    height: 100%;
+    animation: moleculeRotate 20s linear infinite;
+  }
+
+  @keyframes moleculeRotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  .hero-badge {
+    position: relative;
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s ease forwards;
+  }
+
+  .hero-title {
+    position: relative;
+    font-size: clamp(64px, 10vw, 160px);
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    line-height: 0.9;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.8s ease forwards;
+    z-index: 1;
+  }
+
+  .hero-title span { display: block; }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.4);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 1s 1.5s ease forwards;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    animation: scrollPulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { transform: scaleY(1); opacity: 0.4; }
+    50%       { transform: scaleY(0.6); opacity: 0.9; }
+  }
+
+  /* ─── MARQUEE ─────────────────────────────────────────────────────── */
+  .marquee-section {
+    overflow: hidden;
+    background: #fff;
+    padding: 60px 0;
+    border-top: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 80px;
+    animation: marquee 18s linear infinite;
+    width: max-content;
+  }
+
+  .marquee-item {
+    font-size: clamp(60px, 8vw, 120px);
+    font-weight: 500;
+    color: #000;
+    white-space: nowrap;
+    letter-spacing: -2px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .marquee-item .dot {
+    width: 16px;
+    height: 16px;
+    background: #000;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ─── SECTION GENERIC ─────────────────────────────────────────────── */
+  .section {
+    padding: 100px 80px;
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+
+  /* ─── ADC ABOUT SECTION (sticky scroll-stack) ─────────────────────── */
+  .adc-section {
+    position: relative;
+    height: 460vh;
+  }
+
+  .adc-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  /* 배경 대형 타이포 "All About ADC" */
+  .adc-bg-text {
+    position: absolute;
+    font-size: 200px; /* JS fitAdcText()가 뷰포트 너비에 맞게 재설정 */
+    font-weight: 600;
+    color: #000;
+    white-space: nowrap;
+    left: 50%;
+    top: 26%; /* 카드보다 충분히 위에 배치 */
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -3px;
+    line-height: 1;
+  }
+
+  /* 이미지 카드 공통 — 수직 중심 축 */
+  .adc-card {
+    position: absolute;
+    left: 50%;
+    border-radius: 24px;
+    overflow: hidden;
+    will-change: transform;
+  }
+
+  /* about-1: building — 배경 역할, 섹션 중앙 상단 */
+  .adc-card-1 {
+    top: 38vh;
+    width: clamp(300px, 37vw, 550px);
+    height: clamp(260px, 30vw, 460px);
+    z-index: 1;
+    border-radius: 20px;
+    transform: translateX(-50%) translateY(calc(-50% + 110vh));
+  }
+
+  /* about-2: ADC — 메인 비주얼, 섹션 중앙 전면 */
+  .adc-card-2 {
+    top: 65vh;
+    width: clamp(320px, 40vw, 610px);
+    height: clamp(280px, 37vw, 560px);
+    z-index: 2;
+    border-radius: 28px;
+    transform: translateX(-50%) translateY(calc(-50% + 110vh));
+  }
+
+  /* 카드 내부 일러스트 */
+  .card-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* 카드 하단 레이블 */
+  .adc-card-badge {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 100px;
+    padding: 8px 24px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* 오른쪽 About 텍스트 패널 — ADC 카드 세로 중심에 정렬 */
+  .adc-text-panel {
+    position: absolute;
+    right: clamp(40px, 6vw, 120px);
+    top: calc(50% + 15vh);
+    transform: translateY(-50%);
+    max-width: 340px;
+    z-index: 10;
+    opacity: 0;
+  }
+
+  /* 섹션 진행 표시 도트 */
+  .adc-progress-dots {
+    position: absolute;
+    left: clamp(24px, 4vw, 60px);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 10;
+  }
+
+  .adc-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.15);
+    transition: background 0.4s ease, transform 0.4s ease;
+  }
+  .adc-dot.active {
+    background: #000;
+    transform: scale(1.5);
+  }
+
+  .about-label {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--light-gray);
+    margin-bottom: 20px;
+  }
+
+  .about-heading {
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+
+  .about-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--gray);
+    margin-bottom: 32px;
+  }
+
+  .badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--cream);
+    padding: 10px 24px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+  }
+
+  /* ─── TECH SECTION ────────────────────────────────────────────────── */
+  .tech-section {
+    background: #fff;
+    padding: 120px 80px 140px;
+  }
+
+  .section-label {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--light-gray);
+    margin-bottom: 0;
+  }
+
+  /* 대형 헤딩 */
+  .tech-heading {
+    font-size: clamp(52px, 6.5vw, 96px);
+    font-weight: 700;
+    letter-spacing: -3px;
+    line-height: 1;
+    color: #000;
+    margin-bottom: 0;
+  }
+
+  /* 테크 섹션 헤더 (헤딩 + 네비 버튼) */
+  .tech-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 48px;
+  }
+
+  .tech-nav {
+    display: flex;
+    gap: 12px;
+    padding-bottom: 6px;
+  }
+
+  .tech-nav-btn {
+    width: 52px;
+    height: 52px;
+    border: 1.5px solid rgba(0,0,0,0.15);
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    color: #000;
+  }
+
+  .tech-nav-btn:hover {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+  }
+
+  /* 가로 스크롤 래퍼 */
+  .tech-scroll-wrap {
+    overflow: hidden;
+  }
+
+  .tech-scroll-track {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding-bottom: 4px;
+    cursor: grab;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .tech-scroll-track::-webkit-scrollbar { display: none; }
+
+  .tech-scroll-track.grabbing {
+    cursor: grabbing;
+    user-select: none;
+  }
+
+  /* 이미지 우선 카드 */
+  .tech-card {
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+    cursor: default;
+    min-width: 660px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    transition: none;
+  }
+
+  .tech-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .tech-card-image {
+    width: 100%;
+    height: 520px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 24px;
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .tech-card:hover .tech-card-image {
+    transform: translateY(-6px);
+  }
+
+  .tech-card-meta {
+    padding: 0 4px;
+  }
+
+  .tech-card-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #000;
+    letter-spacing: -0.3px;
+  }
+
+  .tech-card-body {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--gray);
+    max-width: 560px;
+  }
+
+  /* ─── TECH TAG ────────────────────────────────────────────────────── */
+  .tech-tag {
+    display: inline-block;
+    background: var(--cream);
+    border-radius: 100px;
+    padding: 6px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--light-gray);
+    margin-top: 16px;
+  }
+
+  /* ─── PIPELINE ────────────────────────────────────────────────────── */
+  .pipeline-section {
+    padding: 120px 80px 140px;
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .pipeline-card {
+    background: var(--cream);
+    border-radius: 24px;
+    padding: 52px 44px;
+    position: sticky;
+    top: 120px;
+    min-height: 620px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pipeline-label {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--light-gray);
+    margin-bottom: 32px;
+  }
+
+  .pipeline-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 40px;
+  }
+
+  .pipeline-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .pipeline-item {
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+
+  .pipeline-item:first-child { color: #000; font-weight: 600; }
+  .pipeline-item:not(:first-child) { color: var(--gray); font-weight: 400; }
+  .pipeline-item:hover { color: #000; }
+
+  /* ─── PIPELINE TABS ────────────────────────────────────────────────── */
+  .pipeline-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 28px;
+    border-bottom: 1.5px solid rgba(0,0,0,0.08);
+  }
+
+  .pipeline-tab {
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--light-gray);
+    padding: 10px 0;
+    margin-right: 28px;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.25s;
+    letter-spacing: -0.2px;
+  }
+
+  .pipeline-tab::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #000;
+    transition: width 0.3s ease;
+  }
+
+  .pipeline-tab.active { color: #000; }
+  .pipeline-tab.active::after { width: 100%; }
+
+  .pipeline-category {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .pipeline-category.out {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  .pipeline-right {
+    padding-top: 0;
+  }
+
+  .pipeline-right-detail {
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    opacity: 1;
+    transform: translateY(0);
+    height: 100%;
+  }
+
+  .pipeline-right-detail.out {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .pipeline-item-enter {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  /* 풀 이미지 배경 + 하단 텍스트 카드 */
+  .pipeline-right-card {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    min-height: 620px;
+    transition: transform 0.4s ease;
+    cursor: default;
+  }
+
+  .pipeline-right-card:hover { transform: translateY(-4px); }
+
+  /* SVG 배경 */
+  .pipeline-right-card-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* 하단 그라디언트 오버레이 + 텍스트 */
+  .pipeline-right-card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 48px 52px 44px;
+    background: linear-gradient(0deg,
+      rgba(0,0,0,0.88) 0%,
+      rgba(0,0,0,0.55) 55%,
+      transparent 100%);
+  }
+
+  .pipeline-right-card-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 10px;
+  }
+
+  .pipeline-right-card-name {
+    font-size: 38px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -1px;
+    margin-bottom: 14px;
+    line-height: 1.1;
+  }
+
+  .pipeline-right-card-desc {
+    font-size: 15px;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.75;
+    margin-bottom: 24px;
+    max-width: 520px;
+  }
+
+  .pipeline-right-card-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .pipeline-right-card-tags span {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 100px;
+    padding: 5px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.82);
+  }
+
+  /* ─── PRECISION ───────────────────────────────────────────────────── */
+  .precision-section {
+    background: var(--cream);
+    padding: 160px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .precision-icon-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    opacity: 0.06;
+    animation: spin-slow 40s linear infinite;
+  }
+
+  @keyframes spin-slow {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .precision-title {
+    font-size: clamp(32px, 5vw, 72px);
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 1.2;
+    max-width: 900px;
+    margin: 0 auto 40px;
+    position: relative;
+  }
+
+  .precision-body {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--gray);
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* ─── INVESTORS ───────────────────────────────────────────────────── */
+  .investors-section {
+    padding: 140px 80px 160px;
+  }
+
+  .investors-label {
+    font-size: 56px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .investors-title {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    line-height: 1.3;
+    white-space: pre-wrap;
+  }
+
+  .investors-body {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--gray);
+    max-width: 800px;
+    margin-bottom: 40px;
+  }
+
+  .investors-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-bottom: 1px solid #000;
+    padding-bottom: 4px;
+    transition: opacity 0.2s;
+  }
+
+  .investors-link:hover { opacity: 0.6; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 80px;
+    border-top: 1px solid rgba(0,0,0,0.12);
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+  }
+
+  .stat-item {
+    padding: 56px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* 항목 사이 구분선 (첫 번째 제외) */
+  .stat-item + .stat-item {
+    border-left: 1px solid rgba(0,0,0,0.12);
+  }
+
+  .stat-number {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+
+  .stat-unit {
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  .stat-text-group {
+    margin-top: 52px;
+  }
+
+  .stat-label {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .stat-sub {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  /* ─── NEWS ────────────────────────────────────────────────────────── */
+  .news-section {
+    padding: 120px 80px;
+    background: var(--cream);
+  }
+
+  .news-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 60px;
+  }
+
+  .news-title {
+    font-size: 48px;
+    font-weight: 600;
+  }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .news-card {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+  }
+
+  .news-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.12);
+  }
+
+  .news-card-img {
+    width: 100%;
+    height: 300px;
+    background: #0d1a2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .news-card-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+  }
+
+  .news-card-content {
+    padding: 32px;
+  }
+
+  .news-card-heading {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+
+  .news-card-body {
+    font-size: 15px;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+
+  /* ─── ESG ─────────────────────────────────────────────────────────── */
+  .esg-section {
+    position: relative;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .esg-bg {
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    margin: 20px;
+    overflow: hidden;
+  }
+
+  .esg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(0,0,0,.42), rgba(0,0,0,.55));
+    z-index: 1;
+  }
+
+  .esg-content {
+    position: relative;
+    text-align: center;
+    color: #fff;
+    z-index: 1;
+  }
+
+  .esg-title {
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 1.3;
+    margin-bottom: 48px;
+  }
+
+  .esg-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: #fff;
+    color: #000;
+    border-radius: 100px;
+    padding: 20px 32px;
+    font-size: 18px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .esg-btn:hover {
+    transform: scale(1.04);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+  }
+
+  .btn-arrow {
+    width: 48px;
+    height: 48px;
+    background: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ─── CAREER ──────────────────────────────────────────────────────── */
+  .career-section {
+    padding: 140px 80px 80px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .career-title {
+    font-size: clamp(20px, 3vw, 38px);
+    font-weight: 600;
+    line-height: 1.7;
+    margin-bottom: 60px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .career-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 40px;
+    border: 1.5px solid #000;
+    border-radius: 100px;
+    padding: 12px 12px 12px 52px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .career-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #e07020;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+    z-index: 0;
+  }
+
+  .career-btn:hover::before { transform: scaleX(1); }
+  .career-btn:hover { color: #fff; }
+  .career-btn span { position: relative; z-index: 1; }
+
+  .career-btn .btn-circle {
+    position: relative;
+    z-index: 1;
+    width: 44px;
+    height: 44px;
+    background: #e07020;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.3s;
+  }
+
+  .career-btn:hover .btn-circle { background: #c05c10; }
+
+  .career-big-text {
+    font-size: clamp(80px, 14vw, 200px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -4px;
+    line-height: 0.9;
+    margin-top: 80px;
+    overflow: hidden;
+  }
+
+  .career-big-text-inner {
+    display: block;
+    transform: translateY(100%);
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .career-big-text.visible .career-big-text-inner {
+    transform: translateY(0);
+  }
+
+  /* ─── ABOUT US ────────────────────────────────────────────────────── */
+  .aboutus-section {
+    background: #000;
+    color: #fff;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  /* Hero: 대형 타이포 + 미션 */
+  .aboutus-hero {
+    padding: 160px 80px 140px;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .aboutus-eyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 48px;
+  }
+
+  .aboutus-headline {
+    font-size: clamp(52px, 6.5vw, 100px);
+    font-weight: 700;
+    letter-spacing: -3px;
+    line-height: 1.0;
+    color: #fff;
+    max-width: 900px;
+    margin-bottom: 0;
+  }
+
+  .aboutus-headline em {
+    font-style: normal;
+    color: #e07020;
+  }
+
+  .aboutus-hero-right {
+    position: absolute;
+    right: 80px;
+    bottom: 80px;
+    max-width: 400px;
+    text-align: right;
+  }
+
+  .aboutus-hero-desc {
+    font-size: 17px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* Story: 좌우 2컬럼 */
+  .aboutus-story {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .aboutus-story-visual {
+    background: #0a0a0a;
+    position: relative;
+    overflow: hidden;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .aboutus-story-content {
+    padding: 100px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .aboutus-story-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #e07020;
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+
+  .aboutus-story-title {
+    font-size: clamp(32px, 3.5vw, 52px);
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 32px;
+  }
+
+  .aboutus-story-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 20px;
+  }
+
+  .aboutus-story-body + .aboutus-story-body {
+    margin-top: 0;
+  }
+
+  /* Numbers bar */
+  .aboutus-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .aboutus-num-item {
+    padding: 60px 64px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .aboutus-num-item:last-child { border-right: none; }
+
+  .aboutus-num-value {
+    font-size: clamp(44px, 4.5vw, 72px);
+    font-weight: 700;
+    letter-spacing: -2px;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .aboutus-num-value span {
+    color: #e07020;
+  }
+
+  .aboutus-num-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 6px;
+  }
+
+  .aboutus-num-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.5;
+  }
+
+  /* Values: 다크 그리드 */
+  .aboutus-values {
+    padding: 120px 80px 140px;
+  }
+
+  .aboutus-values-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 80px;
+    align-items: end;
+  }
+
+  .aboutus-values-title {
+    font-size: clamp(40px, 4vw, 64px);
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    color: #fff;
+  }
+
+  .aboutus-values-desc {
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.45);
+    padding-top: 12px;
+  }
+
+  .aboutus-values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .aboutus-value-item {
+    padding: 52px 44px 52px 0;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    padding-right: 44px;
+  }
+
+  .aboutus-value-item:first-child { padding-left: 0; }
+  .aboutus-value-item:not(:first-child) { padding-left: 44px; }
+  .aboutus-value-item:last-child { border-right: none; }
+
+  .aboutus-value-num {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.2);
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+
+  .aboutus-value-name {
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .aboutus-value-desc {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* Mission closing strip */
+  .aboutus-mission-strip {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+  }
+
+  .aboutus-mission-text {
+    font-size: clamp(22px, 2.5vw, 36px);
+    font-weight: 600;
+    letter-spacing: -0.8px;
+    line-height: 1.4;
+    color: #fff;
+    max-width: 700px;
+  }
+
+  .aboutus-mission-text em {
+    font-style: normal;
+    color: #e07020;
+  }
+
+  .aboutus-mission-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 4px;
+    transition: opacity 0.2s;
+  }
+
+  .aboutus-mission-cta:hover { opacity: 0.6; }
+
+  /* ─── FOOTER ──────────────────────────────────────────────────────── */
+  footer {
+    background: var(--cream);
+    padding: 80px 80px 40px;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr repeat(3, auto);
+    gap: 80px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+  }
+
+  .footer-brand {
+    font-size: 56px;
+    font-weight: 500;
+    color: #000;
+    text-transform: lowercase;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .footer-tagline {
+    font-size: 15px;
+    color: var(--gray);
+    line-height: 1.7;
+    max-width: 360px;
+    margin-bottom: 40px;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 12px;
+  }
+
+  .social-circle {
+    width: 52px;
+    height: 52px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.2s;
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  .social-circle:hover {
+    background: #000;
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  .footer-col-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: #000;
+    margin-bottom: 24px;
+  }
+
+  .footer-col-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer-col-links a {
+    font-size: 15px;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-col-links a:hover { color: #000; }
+
+  .footer-bottom {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .footer-newsletter {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer-newsletter-title {
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  .footer-newsletter-desc {
+    font-size: 15px;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .newsletter-input {
+    flex: 1;
+    max-width: 420px;
+    background: var(--cream);
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 10px;
+    padding: 18px 24px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #000;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .newsletter-input:focus { border-color: #000; }
+
+  .newsletter-submit {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--cream);
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 10px;
+    padding: 18px 32px;
+    font-size: 15px;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .newsletter-submit:hover { background: #000; color: #fff; border-color: #000; }
+
+  .footer-copy {
+    font-size: 14px;
+    color: var(--gray);
+    text-align: center;
+  }
+
+  /* ─── SCROLL ANIMATIONS ───────────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+  .reveal-delay-6 { transition-delay: 0.6s; }
+
+  /* ─── LOADING SCREEN ──────────────────────────────────────────────── */
+  .loader {
+    position: fixed;
+    inset: 0;
+    background: #0d0d0d;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+
+  .loader.hidden { opacity: 0; visibility: hidden; }
+
+  .loader-text {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .loader-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: #fff;
+    animation: loadProgress 1.2s ease forwards;
+  }
+
+  @keyframes loadProgress {
+    from { width: 0; }
+    to   { width: 100%; }
+  }
+
+  /* ─── CURSOR GLOW ─────────────────────────────────────────────────── */
+  .cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,100,50,0.08), transparent);
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s;
+    mix-blend-mode: multiply;
+  }
+
+  /* ─── SVG ICONS ───────────────────────────────────────────────────── */
+  svg { display: block; }
+
+  /* ─── RESPONSIVE ──────────────────────────────────────────────────── */
+  @media (max-width: 1200px) {
+    .tech-card { min-width: 400px; }
+    .pipeline-section { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .news-grid { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .section, .tech-section, .pipeline-section,
+    .investors-section, .news-section, .precision-section, .career-section {
+      padding-left: 24px; padding-right: 24px;
+    }
+    nav { padding: 16px 24px; }
+    .nav-links { gap: 24px; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .news-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 40px; }
+    footer { padding: 60px 24px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loader" id="loader">
+  <div class="loader-text">
+    LIGACHEM BIO
+    <div class="loader-progress"></div>
+  </div>
+</div>
+
+<!-- Cursor Glow -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- Navigation -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <span></span><span></span><span></span>
+    </div>
+    LigaChem
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#technology">Technology</a></li>
+    <li><a href="#pipeline">Pipeline</a></li>
+    <li><a href="#investors">Investors</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <!-- Animated antibody molecule (SVG) -->
+  <div class="hero-molecule">
+    <svg class="molecule-svg" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Y-shape antibody structure -->
+      <g stroke="rgba(255,120,60,0.6)" stroke-width="2.5" fill="none">
+        <!-- Main trunk -->
+        <line x1="250" y1="310" x2="250" y2="420" stroke="rgba(255,100,40,0.8)" stroke-width="3"/>
+        <!-- Left arm -->
+        <line x1="250" y1="240" x2="140" y2="160" stroke="rgba(255,120,60,0.8)" stroke-width="3"/>
+        <!-- Right arm -->
+        <line x1="250" y1="240" x2="360" y2="160" stroke="rgba(255,120,60,0.8)" stroke-width="3"/>
+        <!-- Center -->
+        <circle cx="250" cy="250" r="18" fill="rgba(255,100,40,0.3)" stroke="rgba(255,120,60,0.9)" stroke-width="2"/>
+        <!-- Left Fab tip -->
+        <circle cx="130" cy="150" r="28" fill="rgba(255,80,30,0.15)" stroke="rgba(255,120,60,0.7)"/>
+        <circle cx="130" cy="150" r="14" fill="rgba(255,100,40,0.3)" stroke="rgba(255,140,80,0.9)"/>
+        <!-- Right Fab tip -->
+        <circle cx="370" cy="150" r="28" fill="rgba(255,80,30,0.15)" stroke="rgba(255,120,60,0.7)"/>
+        <circle cx="370" cy="150" r="14" fill="rgba(255,100,40,0.3)" stroke="rgba(255,140,80,0.9)"/>
+        <!-- Fc base -->
+        <circle cx="250" cy="430" r="22" fill="rgba(255,80,30,0.15)" stroke="rgba(255,120,60,0.7)"/>
+        <circle cx="250" cy="430" r="10" fill="rgba(255,100,40,0.3)"/>
+        <!-- Hinge region circles -->
+        <circle cx="250" cy="310" r="10" fill="rgba(255,100,40,0.4)" stroke="rgba(255,150,80,0.8)"/>
+        <circle cx="190" cy="200" r="8" fill="rgba(255,100,40,0.35)" stroke="rgba(255,140,70,0.8)"/>
+        <circle cx="310" cy="200" r="8" fill="rgba(255,100,40,0.35)" stroke="rgba(255,140,70,0.8)"/>
+        <!-- Drug payload dots -->
+        <circle cx="100" cy="170" r="6" fill="rgba(255,200,100,0.7)"/>
+        <circle cx="155" cy="115" r="5" fill="rgba(255,200,100,0.6)"/>
+        <circle cx="400" cy="170" r="6" fill="rgba(255,200,100,0.7)"/>
+        <circle cx="345" cy="115" r="5" fill="rgba(255,200,100,0.6)"/>
+        <!-- Linker chains -->
+        <path d="M118 163 Q 90 155 100 170" stroke="rgba(255,200,80,0.6)" stroke-width="1.5"/>
+        <path d="M143 127 Q 150 105 155 115" stroke="rgba(255,200,80,0.6)" stroke-width="1.5"/>
+        <path d="M382 163 Q 410 155 400 170" stroke="rgba(255,200,80,0.6)" stroke-width="1.5"/>
+        <path d="M357 127 Q 350 105 345 115" stroke="rgba(255,200,80,0.6)" stroke-width="1.5"/>
+        <!-- Orbital rings -->
+        <ellipse cx="250" cy="250" rx="180" ry="180" stroke="rgba(255,100,40,0.06)" stroke-width="1" stroke-dasharray="4 8"/>
+        <ellipse cx="250" cy="250" rx="220" ry="220" stroke="rgba(255,100,40,0.04)" stroke-width="1" stroke-dasharray="2 12"/>
+      </g>
+      <!-- Glow particles -->
+      <g>
+        <circle cx="130" cy="150" r="40" fill="url(#glowL)" opacity="0.5"/>
+        <circle cx="370" cy="150" r="40" fill="url(#glowR)" opacity="0.5"/>
+      </g>
+      <defs>
+        <radialGradient id="glowL" cx="50%" cy="50%">
+          <stop offset="0%" stop-color="rgba(255,120,60,0.4)"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+        <radialGradient id="glowR" cx="50%" cy="50%">
+          <stop offset="0%" stop-color="rgba(255,120,60,0.4)"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="hero-badge">Precision ADC Technology</div>
+  <h1 class="hero-title">
+    <span>LIGACHEM</span>
+    <span>BIO</span>
+  </h1>
+
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+
+<!-- ─── ABOUT (Sticky Stack) ──────────────────────────────────────────── -->
+<section id="about" class="adc-section">
+  <div class="adc-sticky">
+
+    <!-- 배경 대형 타이포 -->
+    <div class="adc-bg-text">All About ADC</div>
+
+    <!-- 진행 표시 도트 (좌측) -->
+    <div class="adc-progress-dots">
+      <div class="adc-dot" id="adcDot0"></div>
+      <div class="adc-dot" id="adcDot1"></div>
+      <div class="adc-dot" id="adcDot2"></div>
+    </div>
+
+    <!-- 이미지 카드 1 : 연구실/배경 (초록 계열) -->
+    <div class="adc-card adc-card-1" id="adcCard1">
+      <div class="card-inner">
+        <!-- 배경: 연구실 환경 일러스트 -->
+        <img src="about 1.png" alt="리가켐바이오 연구 환경" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"/>
+        <div class="adc-card-badge">Research Environment</div>
+      </div>
+    </div>
+
+    <!-- 이미지 카드 2 : 항체 분자 (오렌지 글로우) -->
+    <div class="adc-card adc-card-2" id="adcCard2">
+      <div class="card-inner">
+        <img src="about 2.png" alt="ADC 기술 ConjuAll" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"/>
+        <div class="adc-card-badge">ADC 기술 · ConjuAll™</div>
+      </div>
+    </div>
+
+    <!-- 오른쪽 텍스트 패널 -->
+    <div class="adc-text-panel" id="adcTextPanel">
+      <p class="about-label">About Us</p>
+      <h2 class="about-heading">글로벌 항암 바이오텍<br>리가켐바이오</h2>
+      <p class="about-body">
+        리가켐바이오는 독자적인 ADC 플랫폼 기술 'ConjuAll™'을 기반으로
+        전 세계 암 환자들에게 새로운 치료 가능성을 제시하는 글로벌 항암 바이오텍 기업입니다.
+      </p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <div class="badge-pill">ADC 기술</div>
+        <div class="badge-pill">ConjuAll™</div>
+        <div class="badge-pill">글로벌 파이프라인</div>
+      </div>
+    </div>
+
+  </div><!-- /.adc-sticky -->
+</section>
+
+<!-- ─── TECHNOLOGY ────────────────────────────────────────────────────── -->
+<section id="technology" class="tech-section">
+  <div class="tech-header">
+    <h2 class="tech-heading reveal">Technology</h2>
+    <div class="tech-nav">
+      <button class="tech-nav-btn" id="techPrev" aria-label="이전">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 4L6 9l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="tech-nav-btn" id="techNext" aria-label="다음">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7 4l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="tech-scroll-wrap">
+    <div class="tech-scroll-track" id="techTrack">
+
+      <!-- Card 1: ADC 기술 -->
+      <div class="tech-card reveal reveal-delay-1">
+        <div class="tech-card-image">
+          <img src="technology 1.png" alt="ADC 기술" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"/>
+        </div>
+        <div class="tech-card-meta">
+          <h3 class="tech-card-title">ADC 기술</h3>
+          <p class="tech-card-body">표적 암세포에만 결합하는 항체 특이성으로 정상 세포 피해를 최소화하고 치료 효능을 극대화합니다.</p>
+          <span class="tech-tag">Antibody Selectivity</span>
+        </div>
+      </div>
+
+      <!-- Card 2: ConjuAll™ -->
+      <div class="tech-card reveal reveal-delay-2">
+        <div class="tech-card-image">
+          <img src="technology 2.png" alt="ConjuAll 플랫폼" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"/>
+        </div>
+        <div class="tech-card-meta">
+          <h3 class="tech-card-title">ConjuAll™ 플랫폼</h3>
+          <p class="tech-card-body">스크리닝부터 임상까지 일관된 연구 체계로 글로벌 기술수출을 뒷받침하는 독자적 ADC 플랫폼입니다.</p>
+          <span class="tech-tag">Drug Discovery Platform</span>
+        </div>
+      </div>
+
+      <!-- Card 3: 링커 기술 -->
+      <div class="tech-card reveal reveal-delay-3">
+        <div class="tech-card-image">
+          <img src="technology 3.png" alt="링커 기술" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"/>
+        </div>
+        <div class="tech-card-meta">
+          <h3 class="tech-card-title">링커 기술</h3>
+          <p class="tech-card-body">고안정성 링커 구조로 혈중 안정성과 표적 세포 내 약물 방출 효율을 동시에 최적화합니다.</p>
+          <span class="tech-tag">Linker Chemistry</span>
+        </div>
+      </div>
+
+      <!-- Card 4: 페이로드 최적화 -->
+      <div class="tech-card reveal reveal-delay-4">
+        <div class="tech-card-image">
+          <img src="technology 4.png" alt="페이로드 최적화" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"/>
+        </div>
+        <div class="tech-card-meta">
+          <h3 class="tech-card-title">페이로드 최적화</h3>
+          <p class="tech-card-body">DAR 균일성을 정밀 제어해 치료 효능과 안전성을 동시에 향상시킵니다.</p>
+          <span class="tech-tag">Payload Optimization</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── PIPELINE ──────────────────────────────────────────────────────── -->
+<section id="pipeline" class="pipeline-section">
+
+  <!-- 좌측 카드: 탭 + 항목 리스트 -->
+  <div class="pipeline-card reveal-left">
+    <p class="pipeline-label">Pipeline</p>
+
+    <!-- 탭 버튼 -->
+    <div class="pipeline-tabs">
+      <button class="pipeline-tab active" id="tabSM">Small Molecule</button>
+      <button class="pipeline-tab" id="tabADC">ADC</button>
+    </div>
+
+    <!-- Small Molecule 항목 -->
+    <div class="pipeline-category" id="smPanel">
+      <div class="pipeline-items" id="smItems">
+        <div class="pipeline-item">
+          <span>Delpazolid</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8h8M9 5l3 3-3 3" stroke="#000" stroke-width="1.5"/></svg>
+        </div>
+        <div class="pipeline-item">
+          <span>LCB17-0877</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8h8M9 5l3 3-3 3" stroke="#737373" stroke-width="1.5"/></svg>
+        </div>
+        <div class="pipeline-item">
+          <span>LCB02-0133</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8h8M9 5l3 3-3 3" stroke="#737373" stroke-width="1.5"/></svg>
+        </div>
+        <div class="pipeline-item" style="border-bottom:none;">
+          <span>LCB39</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8h8M9 5l3 3-3 3" stroke="#737373" stroke-width="1.5"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADC 항목 (초기 숨김 — JS로 펼침) -->
+    <div class="pipeline-category" id="adcPanel" style="display:none;">
+      <div class="pipeline-items" id="adcItems">
+        <div class="pipeline-item pipeline-item-enter">
+          <span>LCB14 (HER2)</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8h8M9 5l3 3-3 3" stroke="#000" stroke-width="1.5"/></svg>
+        </div>
+        <div class="pipeline-item pipeline-item-enter">
+          <span>LCB67 (TROP2)</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8h8M9 5l3 3-3 3" stroke="#737373" stroke-width="1.5"/></svg>
+        </div>
+        <div class="pipeline-item pipeline-item-enter">
+          <span>LCB84 (ROR1)</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8h8M9 5l3 3-3 3" stroke="#737373" stroke-width="1.5"/></svg>
+        </div>
+        <div class="pipeline-item pipeline-item-enter" style="border-bottom:none;">
+          <span>HER3-ADC</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8h8M9 5l3 3-3 3" stroke="#737373" stroke-width="1.5"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 우측: 탭에 따라 1개의 상세 카드 전환 -->
+  <div class="pipeline-right">
+
+    <!-- Small Molecule 상세 -->
+    <div class="pipeline-right-detail" id="smRight">
+      <div class="pipeline-right-card">
+        <!-- 풀 배경 SVG: 분자 구조 시각화 -->
+        <img src="pipreline.png" alt="Pipeline" class="pipeline-right-card-bg" style="object-fit:cover;object-position:center;"/>
+        <!-- 하단 텍스트 오버레이 -->
+        <div class="pipeline-right-card-overlay">
+          <p class="pipeline-right-card-label">Small Molecule · Phase III</p>
+          <h3 class="pipeline-right-card-name">Delpazolid</h3>
+          <p class="pipeline-right-card-desc">결핵 치료를 위한 차세대 oxazolidinone계 항생제. 내성균주에 탁월한 항균 효과를 입증하였으며, 글로벌 임상 3상이 진행 중입니다.</p>
+          <div class="pipeline-right-card-tags">
+            <span>Phase III</span>
+            <span>Anti-infective</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADC 상세 (초기 숨김) -->
+    <div class="pipeline-right-detail" id="adcRight" style="display:none;">
+      <div class="pipeline-right-card">
+        <!-- 풀 배경 SVG: ADC 시각화 -->
+        <img src="pipreline.png" alt="Pipeline ADC" class="pipeline-right-card-bg" style="object-fit:cover;object-position:center;"/>
+        <!-- 하단 텍스트 오버레이 -->
+        <div class="pipeline-right-card-overlay">
+          <p class="pipeline-right-card-label">ADC · Phase I</p>
+          <h3 class="pipeline-right-card-name">LCB14 (HER2)</h3>
+          <p class="pipeline-right-card-desc">HER2 표적 ADC로 독자적인 ConjuAll™ 링커 플랫폼을 기반으로 기존 ADC의 한계를 극복한 차세대 항암 치료제입니다.</p>
+          <div class="pipeline-right-card-tags">
+            <span>Phase I</span>
+            <span>Oncology</span>
+            <span>ConjuAll™</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── PRECISION ─────────────────────────────────────────────────────── -->
+<section class="precision-section">
+  <!-- Rotating antibody bg -->
+  <svg class="precision-icon-bg" viewBox="0 0 500 500" fill="none">
+    <g stroke="#000" stroke-width="2">
+      <line x1="250" y1="160" x2="250" y2="340"/>
+      <line x1="250" y1="220" x2="140" y2="140"/>
+      <line x1="250" y1="220" x2="360" y2="140"/>
+      <circle cx="250" cy="230" r="20"/>
+      <circle cx="130" cy="130" r="35"/>
+      <circle cx="370" cy="130" r="35"/>
+      <circle cx="250" cy="350" r="30"/>
+      <circle cx="250" cy="250" r="120" stroke-dasharray="6 10" opacity="0.3"/>
+    </g>
+  </svg>
+
+  <h2 class="precision-title reveal">
+    Precision Driven ADC Technology
+    Transforming the Future of Oncology
+  </h2>
+  <p class="precision-body reveal reveal-delay-2">
+    Our proprietary ConjuAll™ linker platform overcomes the critical limitations of
+    conventional ADCs — delivering superior stability and optimized drug loading efficiency.
+  </p>
+</section>
+
+<!-- ─── INVESTORS ─────────────────────────────────────────────────────── -->
+<section id="investors" class="investors-section">
+  <p class="investors-label reveal">Investors</p>
+  <h2 class="investors-title reveal reveal-delay-1">투자자 여러분과 함께 성장하는<br>글로벌 ADC 바이오텍</h2>
+  <p class="investors-body reveal reveal-delay-2">
+    리가켐바이오는 투명한 경영과 지속적인 기술 성과를 바탕으로 주주 및 투자자와의 신뢰를 최우선으로 생각합니다.
+    최신 공시자료, 재무정보, IR 일정을 이 곳에서 확인하실 수 있습니다.
+  </p>
+  <a href="#" class="investors-link reveal reveal-delay-3">
+    투자 정보 더 알아보기
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="#000" stroke-width="1.5"/></svg>
+  </a>
+
+  <div class="stats-grid">
+    <div class="stat-item reveal reveal-delay-1">
+      <div class="stat-number">
+        <span class="counter" data-target="9.2" data-suffix="조원" data-decimal="1">0</span>
+      </div>
+      <div class="stat-text-group">
+        <p class="stat-label">자산총계</p>
+        <p class="stat-sub">2025년 말 기준</p>
+      </div>
+    </div>
+    <div class="stat-item reveal reveal-delay-2">
+      <div class="stat-number">
+        <span class="counter" data-target="6500" data-suffix="억">0</span>
+      </div>
+      <div class="stat-text-group">
+        <p class="stat-label">매출액</p>
+        <p class="stat-sub">2025년 말 기준</p>
+      </div>
+    </div>
+    <div class="stat-item reveal reveal-delay-3">
+      <div class="stat-number">
+        <span class="counter" data-target="2006" data-suffix="년 5월">0</span>
+      </div>
+      <div class="stat-text-group">
+        <p class="stat-label">설립년도</p>
+        <p class="stat-sub">창립</p>
+      </div>
+    </div>
+    <div class="stat-item reveal reveal-delay-4">
+      <div class="stat-number" style="font-size:42px; letter-spacing:-1px;">
+        AA <span style="font-size:22px; font-weight:500; margin-left:4px;">(안정적)</span>
+      </div>
+      <div class="stat-text-group">
+        <p class="stat-label">신용평가</p>
+        <p class="stat-sub">회사채 신용등급 NICE, 한신평, 한기평</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── NEWS ──────────────────────────────────────────────────────────── -->
+<section class="news-section">
+  <div class="news-header">
+    <h2 class="news-title reveal">최신 소식</h2>
+  </div>
+  <div class="news-grid">
+    <div class="news-card reveal reveal-delay-1">
+      <div class="news-card-img">
+        <img src="news 1.png" alt="뉴스 1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"/>
+      </div>
+      <div class="news-card-content">
+        <h3 class="news-card-heading">글로벌 빅파마와 ADC 후보물질 총 9.2조 원 규모 기술수출 계약 체결</h3>
+        <p class="news-card-body">리가켐바이오가 글로벌 빅파마와의 역대 최대 규모 기술수출 계약을 체결하며 ADC 분야 글로벌 선도 기업으로 입지를 굳혔습니다.</p>
+      </div>
+    </div>
+    <div class="news-card reveal reveal-delay-2">
+      <div class="news-card-img">
+        <img src="news 2.png" alt="뉴스 2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"/>
+      </div>
+      <div class="news-card-content">
+        <h3 class="news-card-heading">차세대 ADC 플랫폼 'ConjuAll™'</h3>
+        <p class="news-card-body">독자적인 링커 페이로드 기술 기반 신규 ADC 파이프라인 데이터를 글로벌 학회에서 공개, 탁월한 유효성을 입증했습니다.</p>
+      </div>
+    </div>
+    <div class="news-card reveal reveal-delay-3">
+      <div class="news-card-img">
+        <img src="news 3.png" alt="뉴스 3" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"/>
+      </div>
+      <div class="news-card-content">
+        <h3 class="news-card-heading">ADC 2026 학회 참가</h3>
+        <p class="news-card-body">리가켐바이오가 ADC 2026 글로벌 학회에 핵심 기조연사로 참가하여 전문성과 기술 유효성을 입증합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ESG ───────────────────────────────────────────────────────────── -->
+<section class="esg-section">
+  <div class="esg-bg">
+    <img src="esg.png" alt="ESG" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"/>
+    <div class="esg-overlay"></div>
+  </div>
+  <div class="esg-content reveal">
+    <h2 class="esg-title">
+      Innovating for Life<br>Sustaining for Humanity.
+    </h2>
+    <a href="#" class="esg-btn">
+      ESG Impact
+      <div class="btn-arrow">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10M12 7l3 3-3 3" stroke="#fff" stroke-width="1.5"/></svg>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ─── CAREER ────────────────────────────────────────────────────────── -->
+<section class="career-section">
+  <p class="about-label reveal">Career</p>
+  <h2 class="career-title reveal reveal-delay-1">
+    스스로의 한계를 넘고자 한다면, 도전의 시작은 리가켐바이오입니다.<br>
+    지금, 그 여정을 함께할 새로운 동료를 기다립니다.
+  </h2>
+  <a href="#" class="career-btn reveal reveal-delay-2">
+    <span>인재 채용</span>
+    <div class="btn-circle">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M6 11h10M13 8l3 3-3 3" stroke="#fff" stroke-width="1.5"/></svg>
+    </div>
+  </a>
+
+  <div class="career-big-text" id="careerBigText">
+    <span class="career-big-text-inner">ligachem bio</span>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">ligachem</div>
+      <p class="footer-tagline">Precision ADC Technology,<br>Transforming the Future of Oncology.</p>
+      <div class="footer-socials">
+        <div class="social-circle" title="Blog">𝐁</div>
+        <div class="social-circle" title="YouTube">▶</div>
+        <div class="social-circle" title="Facebook">f</div>
+        <div class="social-circle" title="X / Twitter">𝕏</div>
+        <div class="social-circle" title="Instagram">◈</div>
+      </div>
+    </div>
+    <div>
+      <p class="footer-col-title">Technology</p>
+      <ul class="footer-col-links">
+        <li><a href="#">ConjuAll™ 플랫폼</a></li>
+        <li><a href="#">Small Molecule ADC</a></li>
+        <li><a href="#">Biologic ADC</a></li>
+        <li><a href="#">Next Generation ADC</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Knowledge</p>
+      <ul class="footer-col-links">
+        <li><a href="#">Insights</a></li>
+        <li><a href="#">IR 자료실</a></li>
+        <li><a href="#">ESG 리포트</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Company</p>
+      <ul class="footer-col-links">
+        <li><a href="#">Pipeline</a></li>
+        <li><a href="#">Career</a></li>
+        <li><a href="#">개인정보처리방침</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-newsletter">
+      <p class="footer-newsletter-title">Stay Updated</p>
+      <p class="footer-newsletter-desc">
+        리가켐바이오의 최신 파이프라인 소식과 글로벌 ADC 연구 동향을 이메일로 받아보세요.
+      </p>
+      <div class="newsletter-form">
+        <input class="newsletter-input" type="email" placeholder="이메일을 입력해주세요">
+        <button class="newsletter-submit">
+          구독하기
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 6l3 3-3 3" stroke="currentColor" stroke-width="1.5"/></svg>
+        </button>
+      </div>
+    </div>
+    <div style="height:1px; background:rgba(0,0,0,0.12);"></div>
+    <p class="footer-copy">© 2026 LigaChem Biosciences, Inc.&nbsp;&nbsp;All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+/* ─── LOADER ──────────────────────────────────────────────────────────── */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+  }, 1400);
+});
+
+/* ─── CURSOR GLOW ─────────────────────────────────────────────────────── */
+const glow = document.getElementById('cursorGlow');
+document.addEventListener('mousemove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top  = e.clientY + 'px';
+});
+
+/* ─── NAV SCROLL ──────────────────────────────────────────────────────── */
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 80) {
+    nav.style.background = 'rgba(0,0,0,0.7)';
+  } else {
+    nav.style.background = 'rgba(0,0,0,0.35)';
+  }
+});
+
+/* ─── INTERSECTION OBSERVER ───────────────────────────────────────────── */
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+revealEls.forEach(el => revealObserver.observe(el));
+
+/* ─── CAREER BIG TEXT ─────────────────────────────────────────────────── */
+const careerBigText = document.getElementById('careerBigText');
+const careerObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      careerBigText.classList.add('visible');
+      careerObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+careerObserver.observe(careerBigText);
+
+/* ─── COUNTER ANIMATION ───────────────────────────────────────────────── */
+const counters = document.querySelectorAll('.counter');
+
+function animateCounter(el) {
+  const target = parseFloat(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const decimal = parseInt(el.dataset.decimal || '0');
+  const duration = 2000;
+  const step = 16;
+  const totalSteps = duration / step;
+  let current = 0;
+  const increment = target / totalSteps;
+
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= target) {
+      current = target;
+      clearInterval(timer);
+    }
+    el.textContent = (decimal > 0 ? current.toFixed(decimal) : Math.round(current)) + suffix;
+  }, step);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounter(entry.target);
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+counters.forEach(el => counterObserver.observe(el));
+
+/* ─── PARALLAX HERO ───────────────────────────────────────────────────── */
+const heroBg = document.querySelector('.hero-bg');
+const heroMolecule = document.querySelector('.hero-molecule');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  if (scrollY < window.innerHeight) {
+    heroBg.style.transform = `translateY(${scrollY * 0.3}px)`;
+    heroMolecule.style.transform = `translate(-50%, calc(-52% + ${scrollY * 0.15}px))`;
+  }
+});
+
+/* 마키 섹션 제거됨 */
+
+/* ─── PIPELINE ITEM HOVER ─────────────────────────────────────────────── */
+function attachPipelineHover() {
+  document.querySelectorAll('.pipeline-item').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      item.style.paddingLeft = '12px';
+      item.style.transition = 'padding 0.2s, color 0.2s';
+    });
+    item.addEventListener('mouseleave', () => {
+      item.style.paddingLeft = '0';
+    });
+  });
+}
+attachPipelineHover();
+
+/* ─── FIT ADC BACKGROUND TEXT ────────────────────────────────────────── */
+function fitAdcText() {
+  const el = document.querySelector('.adc-bg-text');
+  if (!el) return;
+  el.style.fontSize = '100px';
+  const ratio = window.innerWidth / el.offsetWidth;
+  el.style.fontSize = Math.floor(100 * ratio * 1.01) + 'px'; // 1.01 = 완전 edge-to-edge
+}
+fitAdcText();
+// 폰트 로드 완료 후 재계산 (Inter 웹폰트 비동기 로드 대응)
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(fitAdcText);
+}
+window.addEventListener('resize', fitAdcText);
+
+/* ─── TECHNOLOGY HORIZONTAL SCROLL ───────────────────────────────────── */
+const techTrack = document.getElementById('techTrack');
+if (techTrack) {
+  // 드래그 스크롤
+  let isDown = false, startX, scrollLeft;
+  techTrack.addEventListener('mousedown', e => {
+    isDown = true;
+    techTrack.classList.add('grabbing');
+    startX = e.pageX - techTrack.offsetLeft;
+    scrollLeft = techTrack.scrollLeft;
+  });
+  techTrack.addEventListener('mouseleave', () => { isDown = false; techTrack.classList.remove('grabbing'); });
+  techTrack.addEventListener('mouseup',    () => { isDown = false; techTrack.classList.remove('grabbing'); });
+  techTrack.addEventListener('mousemove',  e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - techTrack.offsetLeft;
+    techTrack.scrollLeft = scrollLeft - (x - startX) * 1.4;
+  });
+
+  // 버튼 네비게이션
+  const SCROLL_AMT = 548;
+  document.getElementById('techPrev')?.addEventListener('click', () => {
+    techTrack.scrollBy({ left: -SCROLL_AMT, behavior: 'smooth' });
+  });
+  document.getElementById('techNext')?.addEventListener('click', () => {
+    techTrack.scrollBy({ left: SCROLL_AMT, behavior: 'smooth' });
+  });
+}
+
+/* ─── PIPELINE TABS ────────────────────────────────────────────────────── */
+const tabSM    = document.getElementById('tabSM');
+const tabADC   = document.getElementById('tabADC');
+const smPanel  = document.getElementById('smPanel');
+const adcPanel = document.getElementById('adcPanel');
+const smRight  = document.getElementById('smRight');
+const adcRight = document.getElementById('adcRight');
+
+function animateInItems(containerEl) {
+  const items = containerEl.querySelectorAll('.pipeline-item-enter');
+  items.forEach((item, i) => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(10px)';
+    item.style.transition = `opacity 0.3s ease ${i * 0.07}s, transform 0.3s ease ${i * 0.07}s`;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        item.style.opacity = '1';
+        item.style.transform = 'translateY(0)';
+      });
+    });
+  });
+}
+
+function switchPipeline(to) { // 'sm' | 'adc'
+  const fromPanel  = to === 'adc' ? smPanel  : adcPanel;
+  const toPanel    = to === 'adc' ? adcPanel : smPanel;
+  const fromRight  = to === 'adc' ? smRight  : adcRight;
+  const toRight    = to === 'adc' ? adcRight : smRight;
+  const fromTab    = to === 'adc' ? tabSM    : tabADC;
+  const toTab      = to === 'adc' ? tabADC   : tabSM;
+
+  // 탭 활성
+  fromTab.classList.remove('active');
+  toTab.classList.add('active');
+
+  // 현재 패널 퇴장 (우측 먼저)
+  fromRight.style.transition = 'opacity 0.25s ease';
+  fromRight.style.opacity = '0';
+
+  fromPanel.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+  fromPanel.style.opacity = '0';
+  fromPanel.style.transform = 'translateY(-8px)';
+
+  setTimeout(() => {
+    fromPanel.style.display = 'none';
+    fromRight.style.display = 'none';
+
+    // 새 패널 등장
+    toPanel.style.display = 'block';
+    toRight.style.display = 'block';
+    toPanel.style.opacity = '0';
+    toPanel.style.transform = 'translateY(8px)';
+    toRight.style.opacity = '0';
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        toPanel.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+        toPanel.style.opacity = '1';
+        toPanel.style.transform = 'translateY(0)';
+
+        toRight.style.transition = 'opacity 0.35s ease';
+        toRight.style.opacity = '1';
+
+        // ADC 항목 stagger 애니메이션
+        if (to === 'adc') animateInItems(toPanel);
+        else attachPipelineHover();
+      });
+    });
+  }, 260);
+}
+
+tabSM?.addEventListener('click',  () => switchPipeline('sm'));
+tabADC?.addEventListener('click', () => switchPipeline('adc'));
+
+/* ─── SMOOTH SCROLL ───────────────────────────────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+/* ─── ADC ABOUT SECTION: SCROLL-DRIVEN STACK ANIMATION ──────────────── */
+const adcSection   = document.querySelector('.adc-section');
+const adcCard1     = document.getElementById('adcCard1');
+const adcCard2     = document.getElementById('adcCard2');
+const adcTextPanel = document.getElementById('adcTextPanel');
+const adcDots      = [
+  document.getElementById('adcDot0'),
+  document.getElementById('adcDot1'),
+  document.getElementById('adcDot2'),
+];
+
+function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+function clamp01(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+function updateAdcStack() {
+  if (!adcSection || !adcCard1) return;
+
+  const rect       = adcSection.getBoundingClientRect();
+  const scrollable = adcSection.offsetHeight - window.innerHeight;
+  // progress 0→1 as section scrolls through viewport
+  const progress   = clamp01(-rect.top / scrollable, 0, 1);
+
+  // ── Phase thresholds ────────────────────────────────────────────
+  // 0.00→0.28 : Card 1 (building) 아래에서 올라와 상단 배치
+  // 0.18→0.48 : Card 2 (ADC) 올라와 건물 위를 자연스럽게 덮음
+  // 0.42→0.65 : 텍스트 패널 등장
+
+  const p1 = clamp01((progress - 0.00) / 0.28, 0, 1);
+  const p2 = clamp01((progress - 0.18) / 0.30, 0, 1);
+  const p3 = clamp01((progress - 0.42) / 0.23, 0, 1);
+
+  // 두 카드 모두 수직 중심 축 (translateX -50%), CSS top 값이 각 카드 위치 결정
+  const ty1 = (1 - easeOutCubic(p1)) * 110;
+  const ty2 = (1 - easeOutCubic(p2)) * 110;
+
+  adcCard1.style.transform =
+    `translateX(-50%) translateY(calc(-50% + ${ty1}vh))`;
+  adcCard2.style.transform =
+    `translateX(-50%) translateY(calc(-50% + ${ty2}vh))`;
+
+  adcTextPanel.style.opacity   = easeOutCubic(p3);
+  adcTextPanel.style.transform =
+    `translateY(calc(-50% + ${(1 - easeOutCubic(p3)) * 40}px))`;
+
+  // ── 진행 도트 ──────────────────────────────────────────────────
+  if (adcDots[0]) adcDots[0].classList.toggle('active', p1 > 0.05 && p2 < 0.9);
+  if (adcDots[1]) adcDots[1].classList.toggle('active', p2 > 0.05 && p3 < 0.9);
+  if (adcDots[2]) adcDots[2].classList.toggle('active', p3 > 0.05);
+}
+
+updateAdcStack();
+window.addEventListener('scroll', updateAdcStack, { passive: true });
+</script>
+</body>
+</html>

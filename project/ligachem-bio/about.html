@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — LigaChem Biosciences</title>
+<meta name="description" content="ADC 기술로 암 치료의 미래를 다시 씁니다. LigaChem Biosciences.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── RESET ───────────────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--or:#e07020;--cream:#f9f6f1;--g:#515151}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#000;color:#fff;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+svg{display:block}
+
+/* ── A11Y ────────────────────────────────────────────────────────────────── */
+.skip{position:absolute;left:8px;top:-60px;z-index:10000;background:var(--or);color:#fff;padding:10px 18px;border-radius:8px;font-size:14px;font-weight:600;transition:top .2s}
+.skip:focus{top:8px}
+:focus-visible{outline:2px solid var(--or);outline-offset:3px}
+
+/* ── LOADER ──────────────────────────────────────────────────────────────── */
+.loader{position:fixed;inset:0;background:#080808;z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .7s,visibility .7s}
+.loader.out{opacity:0;visibility:hidden}
+.loader-label{font-size:13px;font-weight:600;letter-spacing:6px;text-transform:uppercase;color:rgba(255,255,255,.7);position:relative}
+.loader-bar{position:absolute;bottom:-8px;left:0;height:1px;background:var(--or);animation:lbar 1.2s ease forwards}
+@keyframes lbar{from{width:0}to{width:100%}}
+
+/* ── CURSOR ──────────────────────────────────────────────────────────────── */
+.glow{position:fixed;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(224,112,32,.07),transparent);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);mix-blend-mode:multiply;transition:left .08s,top .08s}
+
+/* ── NAV ─────────────────────────────────────────────────────────────────── */
+nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);width:min(1080px,90vw);background:rgba(0,0,0,.4);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:100px;padding:18px 44px;display:flex;align-items:center;justify-content:space-between;z-index:1000;border:1px solid rgba(255,255,255,.08);animation:navIn .8s ease forwards}
+@keyframes navIn{from{opacity:0;transform:translateX(-50%) translateY(-16px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.nav-logo{display:flex;align-items:center;gap:10px;color:#fff;font-size:15px;font-weight:700;letter-spacing:.5px}
+.logo-mark{width:24px;height:16px;display:flex;flex-direction:column;gap:3px}
+.logo-mark span{display:block;height:2px;background:#fff;border-radius:2px}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{color:#fff;font-size:14px;font-weight:500;opacity:.7;transition:opacity .25s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:#fff;transition:width .25s}
+.nav-links a:hover,.nav-links a[aria-current]{opacity:1}
+.nav-links a:hover::after,.nav-links a[aria-current]::after{width:100%}
+
+/* ── REVEAL ──────────────────────────────────────────────────────────────── */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease}
+.rv.on{opacity:1;transform:none}
+.rv-l{opacity:0;transform:translateX(-24px);transition:opacity .9s ease,transform .9s ease}
+.rv-l.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.22s}.d3{transition-delay:.36s}.d4{transition-delay:.5s}
+
+/* ── HERO ─────────────────────────────────────────────────────────────────── */
+.hero{position:relative;height:100vh;min-height:700px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;overflow:hidden;background:#080808}
+.hero-adc{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-radial{position:absolute;inset:0;background:radial-gradient(ellipse 55% 65% at 50% 42%,rgba(220,90,20,.14) 0%,transparent 65%),radial-gradient(ellipse 30% 40% at 20% 70%,rgba(255,120,40,.06) 0%,transparent 60%)}
+.hero-vignette{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,8,.2) 0%,transparent 35%,transparent 55%,rgba(0,0,0,.92) 100%)}
+.hero-text{position:relative;z-index:2;text-align:center;padding:0 24px 80px}
+.hero-label{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:20px;opacity:0;animation:fup .7s .8s ease forwards}
+@keyframes fup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.hero-h1{font-size:clamp(52px,8vw,124px);font-weight:700;letter-spacing:-3px;line-height:1.0;color:#fff;opacity:0;animation:fup .85s 1s ease forwards}
+.hero-h1 em{font-style:normal;color:var(--or)}
+.hero-sub{margin-top:20px;font-size:clamp(15px,1.6vw,20px);color:rgba(255,255,255,.42);font-weight:400;letter-spacing:.2px;opacity:0;animation:fup .8s 1.2s ease forwards}
+.hero-scroll{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.3);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;opacity:0;animation:fup 1s 1.8s ease forwards}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,rgba(255,255,255,.3),transparent);animation:spulse 2s ease-in-out infinite}
+@keyframes spulse{0%,100%{opacity:.3}50%{opacity:.8}}
+
+/* ── SECTION BASE ────────────────────────────────────────────────────────── */
+.sec{padding:128px 80px;border-bottom:1px solid rgba(255,255,255,.06)}
+.sec:last-of-type{border-bottom:none}
+.ew{font-size:11px;font-weight:500;letter-spacing:3.5px;text-transform:uppercase;color:var(--or);display:block;margin-bottom:36px}
+.stitle{font-size:clamp(42px,5.5vw,84px);font-weight:700;letter-spacing:-3px;line-height:1.05;color:#fff}
+.stitle em{font-style:normal;color:var(--or)}
+.btext{font-size:16px;line-height:1.9;color:rgba(255,255,255,.44)}
+
+/* ── 02 PURPOSE ──────────────────────────────────────────────────────────── */
+.purpose{position:relative;overflow:hidden}
+.purpose-bg{position:absolute;inset:0;pointer-events:none;opacity:.35}
+.purpose-grid{display:grid;grid-template-columns:55% 45%;gap:80px;align-items:center;position:relative;z-index:1}
+.purpose-right p+p{margin-top:28px}
+.purpose-meta{position:relative;z-index:1;margin-top:64px;padding-top:32px;border-top:1px solid rgba(255,255,255,.07);display:flex;gap:0;font-size:13px;color:rgba(255,255,255,.25);letter-spacing:.3px;flex-wrap:wrap}
+.pm-item{display:flex;align-items:center}
+.pm-item+.pm-item::before{content:'·';margin:0 16px;color:rgba(255,255,255,.12)}
+
+/* ── 03 JOURNEY ──────────────────────────────────────────────────────────── */
+.journey-track{position:relative;margin-top:72px;padding-top:24px}
+.journey-line-wrap{position:absolute;top:12px;left:0;right:0;height:1px;overflow:hidden}
+.journey-line-bg{width:100%;height:100%;background:rgba(255,255,255,.08)}
+.journey-line-fill{position:absolute;inset:0;background:linear-gradient(to right,var(--or),rgba(224,112,32,.4));transform:scaleX(0);transform-origin:left;transition:transform 1.4s cubic-bezier(.16,1,.3,1)}
+.journey-line-fill.on{transform:scaleX(1)}
+.journey-cols{display:grid;grid-template-columns:repeat(4,1fr)}
+.jcol{padding-top:36px;padding-right:40px}
+.jcol+.jcol{padding-left:4px}
+.jdot{width:12px;height:12px;border-radius:50%;background:var(--or);box-shadow:0 0 0 4px rgba(224,112,32,.15),0 0 24px rgba(224,112,32,.35);margin-bottom:28px}
+.jyear{font-size:clamp(36px,4vw,60px);font-weight:700;color:var(--or);letter-spacing:-2px;line-height:1;margin-bottom:16px}
+.jtitle{font-size:17px;font-weight:600;color:#fff;margin-bottom:8px;letter-spacing:-.2px}
+.jdesc{font-size:13.5px;line-height:1.8;color:rgba(255,255,255,.36)}
+
+/* ── 04 CONJUALL ─────────────────────────────────────────────────────────── */
+.platform-sec{text-align:center}
+.platform-intro{max-width:680px;margin:0 auto 72px}
+.platform-intro .stitle{font-size:clamp(38px,4.8vw,76px)}
+.platform-intro .btext{margin-top:20px;font-size:15px}
+.adc-diagram-wrap{position:relative;max-width:900px;margin:0 auto}
+.adc-diagram{width:100%;height:auto}
+.platform-awards{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:56px}
+.award-tag{display:inline-flex;align-items:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);padding:8px 20px;border-radius:100px;font-size:12px;font-weight:500;color:rgba(255,255,255,.6);letter-spacing:.2px}
+
+/* ── 05 TRUST ────────────────────────────────────────────────────────────── */
+.trust-intro{max-width:600px;margin-bottom:72px}
+.logo-wall{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden}
+.logo-cell{background:#000;padding:40px 36px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;transition:background .3s}
+.logo-cell:hover{background:rgba(255,255,255,.03)}
+.logo-name{font-size:18px;font-weight:700;color:rgba(255,255,255,.72);letter-spacing:.5px;text-align:center}
+.logo-sub{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.22)}
+.trust-stats{display:flex;gap:0;margin-top:64px;border-top:1px solid rgba(255,255,255,.07);padding-top:48px}
+.tstat{flex:1;border-right:1px solid rgba(255,255,255,.07)}
+.tstat:last-child{border-right:none;padding-left:56px}
+.tstat-num{font-size:clamp(44px,5vw,72px);font-weight:700;letter-spacing:-3px;color:#fff;line-height:1}
+.tstat-num em{font-style:normal;color:var(--or)}
+.tstat-label{font-size:14px;color:rgba(255,255,255,.32);margin-top:8px;letter-spacing:.2px}
+
+/* ── 06 PEOPLE ───────────────────────────────────────────────────────────── */
+.people-sec{position:relative;overflow:hidden;min-height:600px;display:flex;flex-direction:column;justify-content:center}
+.people-bg{position:absolute;inset:0;pointer-events:none}
+.people-content{position:relative;z-index:1}
+.people-quote{font-size:clamp(32px,4vw,64px);font-weight:700;letter-spacing:-2px;line-height:1.1;color:#fff;max-width:860px;margin-bottom:40px}
+.people-quote em{font-style:normal;color:var(--or)}
+.people-sub{font-size:16px;line-height:1.85;color:rgba(255,255,255,.4);max-width:560px}
+
+/* ── 07 VISION ───────────────────────────────────────────────────────────── */
+.vision-sec{position:relative;overflow:hidden;padding-top:160px;padding-bottom:160px;border-bottom:none}
+.vision-bg{position:absolute;inset:0;pointer-events:none}
+.vision-content{position:relative;z-index:1;text-align:center;max-width:900px;margin:0 auto}
+.vision-eyebrow{font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:rgba(255,255,255,.28);display:block;margin-bottom:40px}
+.vision-h{font-size:clamp(38px,5.5vw,88px);font-weight:700;letter-spacing:-3px;line-height:1.06;color:#fff}
+.vision-h em{font-style:normal;color:var(--or)}
+.vision-rule{width:48px;height:2px;background:var(--or);margin:52px auto}
+.vision-sub{font-size:18px;line-height:1.85;color:rgba(255,255,255,.36);max-width:560px;margin:0 auto}
+
+/* ── FOOTER ──────────────────────────────────────────────────────────────── */
+footer{background:var(--cream);padding:80px 80px 40px}
+.ft{display:grid;grid-template-columns:1fr repeat(3,auto);gap:80px;padding-bottom:56px;border-bottom:1px solid rgba(0,0,0,.1)}
+.fb{font-size:52px;font-weight:500;color:#000;text-transform:lowercase;line-height:1;margin-bottom:16px}
+.ftag{font-size:14px;color:var(--g);line-height:1.7;max-width:340px;margin-bottom:36px}
+.fsoc{display:flex;gap:10px}
+.fsc{width:48px;height:48px;background:rgba(0,0,0,.07);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s;cursor:pointer;font-size:17px}
+.fsc:hover{background:#000;color:#fff;transform:translateY(-2px)}
+.fc-title{font-size:20px;font-weight:500;color:#000;margin-bottom:20px}
+.fc-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.fc-links a{font-size:14px;color:var(--g);transition:color .2s}
+.fc-links a:hover{color:#000}
+.fcopy{padding-top:36px;font-size:13px;color:var(--g);text-align:center}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────────────── */
+@media(prefers-reduced-motion:reduce){.rv,.rv-l{opacity:1;transform:none;transition:none}.hero-bg,.scroll-line{animation:none}}
+@media(max-width:1100px){.logo-wall{grid-template-columns:repeat(2,1fr)}.ft{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){
+  .sec,.vision-sec{padding:80px 24px}
+  footer{padding:56px 24px 32px}
+  nav{padding:14px 20px;border-radius:20px}
+  .nav-links{gap:16px}
+  .nav-links a{font-size:13px}
+  .purpose-grid{grid-template-columns:1fr;gap:36px}
+  .journey-cols{grid-template-columns:1fr 1fr}
+  .logo-wall{grid-template-columns:1fr 1fr}
+  .trust-stats{flex-direction:column;gap:36px}
+  .tstat{border-right:none;padding-left:0 !important;border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:36px}
+  .tstat:last-child{border-bottom:none;padding-bottom:0}
+  .ft{grid-template-columns:1fr;gap:36px}
+}
+@media(max-width:540px){.journey-cols{grid-template-columns:1fr}.logo-wall{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip">본문으로 바로가기</a>
+
+<div class="loader" id="loader">
+  <div class="loader-label">LigaChem Bio<div class="loader-bar"></div></div>
+</div>
+
+<div class="glow" id="glow" aria-hidden="true"></div>
+
+<nav aria-label="주 메뉴">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark" aria-hidden="true"><span></span><span></span><span></span></div>LigaChem
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#technology">Technology</a></li>
+    <li><a href="index.html#pipeline">Pipeline</a></li>
+    <li><a href="index.html#investors">Investors</a></li>
+    <li><a href="about.html" aria-current="page">About Us</a></li>
+  </ul>
+</nav>
+
+<main id="main">
+
+<!-- ═══════════════════════════════════════════════════════════ 01 HERO -->
+<section class="hero" aria-label="소개">
+  <!-- ADC Molecule — full-viewport SVG -->
+  <svg class="hero-adc" viewBox="0 0 1000 900" fill="none" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%">
+    <defs>
+      <radialGradient id="hg" cx="50%" cy="46%" r="48%">
+        <stop offset="0%" stop-color="#e07020" stop-opacity=".18"/>
+        <stop offset="100%" stop-color="#e07020" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="bloom"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+    <!-- Core glow -->
+    <ellipse cx="500" cy="440" rx="360" ry="290" fill="url(#hg)"/>
+    <!-- ── Fc STEM (two heavy chains going down) ── -->
+    <line x1="488" y1="440" x2="488" y2="740" stroke="rgba(224,112,32,.55)" stroke-width="9" stroke-linecap="round"/>
+    <line x1="512" y1="440" x2="512" y2="740" stroke="rgba(224,112,32,.45)" stroke-width="9" stroke-linecap="round"/>
+    <!-- CH3 domains -->
+    <ellipse cx="466" cy="710" rx="34" ry="23" fill="rgba(224,112,32,.08)" stroke="rgba(224,112,32,.55)" stroke-width="1.5"/>
+    <ellipse cx="534" cy="710" rx="34" ry="23" fill="rgba(224,112,32,.08)" stroke="rgba(224,112,32,.55)" stroke-width="1.5"/>
+    <!-- CH2 domains -->
+    <ellipse cx="462" cy="615" rx="34" ry="23" fill="rgba(224,112,32,.06)" stroke="rgba(224,112,32,.42)" stroke-width="1.5"/>
+    <ellipse cx="538" cy="615" rx="34" ry="23" fill="rgba(224,112,32,.06)" stroke="rgba(224,112,32,.42)" stroke-width="1.5"/>
+    <!-- Hinge -->
+    <path d="M452 555 Q468 510 488 490 M548 555 Q532 510 512 490" stroke="rgba(224,112,32,.28)" stroke-width="2.5" stroke-dasharray="6,5" fill="none"/>
+    <!-- ── LEFT FAB ARM ── -->
+    <path d="M488 470 C430 415 338 335 225 215" stroke="rgba(224,112,32,.62)" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <!-- Left heavy chain domains -->
+    <ellipse cx="354" cy="343" rx="31" ry="21" transform="rotate(-42 354 343)" fill="rgba(224,112,32,.1)" stroke="rgba(224,112,32,.5)" stroke-width="1.5"/>
+    <ellipse cx="244" cy="228" rx="31" ry="21" transform="rotate(-42 244 228)" fill="rgba(224,112,32,.12)" stroke="rgba(224,112,32,.58)" stroke-width="1.5"/>
+    <!-- Left light chain -->
+    <path d="M476 484 C415 428 318 348 198 238" stroke="rgba(224,112,32,.32)" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <ellipse cx="325" cy="358" rx="27" ry="18" transform="rotate(-42 325 358)" fill="rgba(224,112,32,.06)" stroke="rgba(224,112,32,.32)" stroke-width="1.5"/>
+    <ellipse cx="210" cy="246" rx="27" ry="18" transform="rotate(-42 210 246)" fill="rgba(224,112,32,.07)" stroke="rgba(224,112,32,.35)" stroke-width="1.5"/>
+    <!-- ── RIGHT FAB ARM ── -->
+    <path d="M512 470 C570 415 662 335 775 215" stroke="rgba(224,112,32,.62)" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <!-- Right heavy chain domains -->
+    <ellipse cx="646" cy="343" rx="31" ry="21" transform="rotate(42 646 343)" fill="rgba(224,112,32,.1)" stroke="rgba(224,112,32,.5)" stroke-width="1.5"/>
+    <ellipse cx="756" cy="228" rx="31" ry="21" transform="rotate(42 756 228)" fill="rgba(224,112,32,.12)" stroke="rgba(224,112,32,.58)" stroke-width="1.5"/>
+    <!-- Right light chain -->
+    <path d="M524 484 C585 428 682 348 802 238" stroke="rgba(224,112,32,.32)" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <ellipse cx="675" cy="358" rx="27" ry="18" transform="rotate(42 675 358)" fill="rgba(224,112,32,.06)" stroke="rgba(224,112,32,.32)" stroke-width="1.5"/>
+    <ellipse cx="790" cy="246" rx="27" ry="18" transform="rotate(42 790 246)" fill="rgba(224,112,32,.07)" stroke="rgba(224,112,32,.35)" stroke-width="1.5"/>
+    <!-- ── PAYLOAD 1 — left Fab tip ── -->
+    <path d="M222 212 L158 152" stroke="rgba(224,112,32,.5)" stroke-width="2" stroke-dasharray="5,4"/>
+    <circle cx="148" cy="136" r="20" fill="rgba(224,112,32,.1)" stroke="rgba(224,112,32,.58)" stroke-width="1.5"/>
+    <circle cx="130" cy="122" r="11" fill="rgba(224,112,32,.16)" stroke="rgba(224,112,32,.65)" stroke-width="1.5"/>
+    <circle cx="166" cy="122" r="11" fill="rgba(224,112,32,.16)" stroke="rgba(224,112,32,.65)" stroke-width="1.5"/>
+    <circle cx="148" cy="104" r="11" fill="rgba(224,112,32,.16)" stroke="rgba(224,112,32,.65)" stroke-width="1.5"/>
+    <line x1="130" y1="122" x2="148" y2="136" stroke="rgba(224,112,32,.6)" stroke-width="1.5"/>
+    <line x1="166" y1="122" x2="148" y2="136" stroke="rgba(224,112,32,.6)" stroke-width="1.5"/>
+    <line x1="148" y1="104" x2="148" y2="136" stroke="rgba(224,112,32,.6)" stroke-width="1.5"/>
+    <circle cx="148" cy="122" r="5" fill="rgba(255,160,60,.9)" filter="url(#bloom)"/>
+    <!-- ── PAYLOAD 2 — left mid-chain ── -->
+    <path d="M196 240 L136 285" stroke="rgba(224,112,32,.48)" stroke-width="2" stroke-dasharray="5,4"/>
+    <circle cx="124" cy="300" r="16" fill="rgba(224,112,32,.09)" stroke="rgba(224,112,32,.52)" stroke-width="1.5"/>
+    <circle cx="106" cy="290" r="10" fill="rgba(224,112,32,.14)" stroke="rgba(224,112,32,.62)" stroke-width="1.5"/>
+    <circle cx="142" cy="290" r="10" fill="rgba(224,112,32,.14)" stroke="rgba(224,112,32,.62)" stroke-width="1.5"/>
+    <line x1="106" y1="290" x2="124" y2="300" stroke="rgba(224,112,32,.56)" stroke-width="1.5"/>
+    <line x1="142" y1="290" x2="124" y2="300" stroke="rgba(224,112,32,.56)" stroke-width="1.5"/>
+    <circle cx="124" cy="292" r="4" fill="rgba(255,150,50,.85)" filter="url(#bloom)"/>
+    <!-- ── PAYLOAD 3 — right Fab tip ── -->
+    <path d="M778 212 L842 152" stroke="rgba(224,112,32,.5)" stroke-width="2" stroke-dasharray="5,4"/>
+    <circle cx="852" cy="136" r="20" fill="rgba(224,112,32,.1)" stroke="rgba(224,112,32,.58)" stroke-width="1.5"/>
+    <circle cx="834" cy="122" r="11" fill="rgba(224,112,32,.16)" stroke="rgba(224,112,32,.65)" stroke-width="1.5"/>
+    <circle cx="870" cy="122" r="11" fill="rgba(224,112,32,.16)" stroke="rgba(224,112,32,.65)" stroke-width="1.5"/>
+    <circle cx="852" cy="104" r="11" fill="rgba(224,112,32,.16)" stroke="rgba(224,112,32,.65)" stroke-width="1.5"/>
+    <line x1="834" y1="122" x2="852" y2="136" stroke="rgba(224,112,32,.6)" stroke-width="1.5"/>
+    <line x1="870" y1="122" x2="852" y2="136" stroke="rgba(224,112,32,.6)" stroke-width="1.5"/>
+    <line x1="852" y1="104" x2="852" y2="136" stroke="rgba(224,112,32,.6)" stroke-width="1.5"/>
+    <circle cx="852" cy="122" r="5" fill="rgba(255,160,60,.9)" filter="url(#bloom)"/>
+    <!-- ── PAYLOAD 4 — right mid-chain ── -->
+    <path d="M804 240 L864 285" stroke="rgba(224,112,32,.48)" stroke-width="2" stroke-dasharray="5,4"/>
+    <circle cx="876" cy="300" r="16" fill="rgba(224,112,32,.09)" stroke="rgba(224,112,32,.52)" stroke-width="1.5"/>
+    <circle cx="858" cy="290" r="10" fill="rgba(224,112,32,.14)" stroke="rgba(224,112,32,.62)" stroke-width="1.5"/>
+    <circle cx="894" cy="290" r="10" fill="rgba(224,112,32,.14)" stroke="rgba(224,112,32,.62)" stroke-width="1.5"/>
+    <line x1="858" y1="290" x2="876" y2="300" stroke="rgba(224,112,32,.56)" stroke-width="1.5"/>
+    <line x1="894" y1="290" x2="876" y2="300" stroke="rgba(224,112,32,.56)" stroke-width="1.5"/>
+    <circle cx="876" cy="292" r="4" fill="rgba(255,150,50,.85)" filter="url(#bloom)"/>
+    <!-- Subtle orbit rings -->
+    <ellipse cx="500" cy="440" rx="310" ry="200" stroke="rgba(255,255,255,.03)" stroke-width="1" stroke-dasharray="4,10"/>
+    <ellipse cx="500" cy="440" rx="410" ry="270" stroke="rgba(255,255,255,.02)" stroke-width="1" stroke-dasharray="3,14"/>
+  </svg>
+  <div class="hero-radial" aria-hidden="true"></div>
+  <div class="hero-vignette" aria-hidden="true"></div>
+  <div class="hero-text">
+    <p class="hero-label">LigaChem Biosciences · About Us</p>
+    <h1 class="hero-h1">From Molecule<br>to <em>Life</em></h1>
+    <p class="hero-sub">ADC 기술로 암 치료의 미래를 다시 씁니다.</p>
+  </div>
+  <a href="#purpose" class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></a>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ 02 OUR PURPOSE -->
+<section class="sec purpose" id="purpose" aria-labelledby="purposeH">
+  <!-- Background molecular pattern -->
+  <svg class="purpose-bg" viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true">
+    <circle cx="1100" cy="350" r="280" stroke="rgba(224,112,32,.08)" stroke-width="1"/>
+    <circle cx="1100" cy="350" r="180" stroke="rgba(224,112,32,.06)" stroke-width="1" stroke-dasharray="3,8"/>
+    <circle cx="1100" cy="350" r="90" stroke="rgba(224,112,32,.05)" stroke-width="1"/>
+    <circle cx="1100" cy="350" r="28" fill="rgba(224,112,32,.12)"/>
+    <line x1="1100" y1="70" x2="1100" y2="190" stroke="rgba(224,112,32,.12)" stroke-width="1.5"/>
+    <line x1="1100" y1="510" x2="1100" y2="630" stroke="rgba(224,112,32,.12)" stroke-width="1.5"/>
+    <line x1="820" y1="350" x2="940" y2="350" stroke="rgba(224,112,32,.12)" stroke-width="1.5"/>
+    <line x1="1260" y1="350" x2="1380" y2="350" stroke="rgba(224,112,32,.12)" stroke-width="1.5"/>
+  </svg>
+  <span class="ew rv">Our Purpose</span>
+  <div class="purpose-grid">
+    <h2 class="stitle rv d1" id="purposeH">ADC로<br>미래 암 치료를<br><em>다시 씁니다</em></h2>
+    <div>
+      <p class="btext rv d2">2006년, ADC가 아직 가능성에 불과하던 시절 리가켐바이오는 단 하나의 믿음으로 출발했습니다.</p>
+      <p class="btext rv d3" style="margin-top:24px">18년의 연구 끝에 완성한 ConjuALL™ 플랫폼은 세계 최고의 제약사들이 선택했습니다 — 이제 그 기술이 실제 환자에게 닿고 있습니다.</p>
+    </div>
+  </div>
+  <div class="purpose-meta rv d4">
+    <span class="pm-item">2006년 창립</span>
+    <span class="pm-item">18년 ADC 전문 연구</span>
+    <span class="pm-item">World ADC Award 6연속 수상</span>
+    <span class="pm-item">20+ 글로벌 파트너십</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ 03 JOURNEY -->
+<section class="sec" id="journey" aria-labelledby="journeyH">
+  <span class="ew rv">Our Journey</span>
+  <h2 class="stitle rv d1" id="journeyH">한 걸음씩, <em>확실하게</em></h2>
+  <div class="journey-track">
+    <div class="journey-line-wrap"><div class="journey-line-bg"></div><div class="journey-line-fill" id="jline"></div></div>
+    <div class="journey-cols">
+      <div class="jcol rv d1">
+        <div class="jdot"></div>
+        <div class="jyear">2006</div>
+        <h3 class="jtitle">창립</h3>
+        <p class="jdesc">ADC가 낯설던 시절, 더 나은 암 치료를 향한 믿음으로 시작했습니다.</p>
+      </div>
+      <div class="jcol rv d2">
+        <div class="jdot"></div>
+        <div class="jyear">2014</div>
+        <h3 class="jtitle">ConjuALL™ 완성</h3>
+        <p class="jdesc">β-Glucuronidase 기반 독자 링커 기술 확립 — ADC 플랫폼의 핵심이 갖춰졌습니다.</p>
+      </div>
+      <div class="jcol rv d3">
+        <div class="jdot"></div>
+        <div class="jyear">2019–23</div>
+        <h3 class="jtitle">글로벌 검증</h3>
+        <p class="jdesc">Boehringer Ingelheim, Pfizer, Janssen과 연속 기술이전 — ConjuALL™을 세계가 인정했습니다.</p>
+      </div>
+      <div class="jcol rv d4">
+        <div class="jdot"></div>
+        <div class="jyear">2026</div>
+        <h3 class="jtitle">첫 상업 매출</h3>
+        <p class="jdesc">LCB14 중국 상업화 임박 — ADC 기술의 첫 로열티 수익이 현실이 됩니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ 04 WHY CONJUALL -->
+<section class="sec platform-sec" id="conjuall" aria-labelledby="platformH">
+  <span class="ew rv">ConjuALL™ Platform</span>
+  <div class="platform-intro">
+    <h2 class="stitle rv d1" id="platformH">세 요소의<br><em>완벽한 균형</em></h2>
+    <p class="btext rv d2">혈중에서는 안정적으로, 암세포 내부에서만 선택적으로 — ConjuALL™ 링커의 핵심 원리입니다.</p>
+  </div>
+  <!-- Labeled ADC diagram -->
+  <div class="adc-diagram-wrap rv d2">
+    <svg class="adc-diagram" viewBox="0 0 900 560" fill="none" aria-label="ConjuALL ADC 구조 다이어그램" role="img">
+      <defs>
+        <radialGradient id="dg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#e07020" stop-opacity=".14"/>
+          <stop offset="100%" stop-color="#e07020" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="450" cy="280" rx="260" ry="210" fill="url(#dg)"/>
+
+      <!-- ── ANTIBODY — center Y structure ── -->
+      <!-- Fc stem -->
+      <line x1="443" y1="270" x2="443" y2="490" stroke="rgba(224,112,32,.58)" stroke-width="8" stroke-linecap="round"/>
+      <line x1="457" y1="270" x2="457" y2="490" stroke="rgba(224,112,32,.48)" stroke-width="8" stroke-linecap="round"/>
+      <ellipse cx="432" cy="465" rx="22" ry="15" fill="rgba(224,112,32,.08)" stroke="rgba(224,112,32,.5)" stroke-width="1.5"/>
+      <ellipse cx="468" cy="465" rx="22" ry="15" fill="rgba(224,112,32,.08)" stroke="rgba(224,112,32,.5)" stroke-width="1.5"/>
+      <ellipse cx="430" cy="400" rx="22" ry="15" fill="rgba(224,112,32,.06)" stroke="rgba(224,112,32,.4)" stroke-width="1.5"/>
+      <ellipse cx="470" cy="400" rx="22" ry="15" fill="rgba(224,112,32,.06)" stroke="rgba(224,112,32,.4)" stroke-width="1.5"/>
+      <path d="M430 350 Q442 310 443 280 M470 350 Q458 310 457 280" stroke="rgba(224,112,32,.22)" stroke-width="2" stroke-dasharray="5,5" fill="none"/>
+      <!-- Left Fab arm -->
+      <path d="M443 268 C400 230 330 168 248 100" stroke="rgba(224,112,32,.62)" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <ellipse cx="328" cy="172" rx="24" ry="16" transform="rotate(-42 328 172)" fill="rgba(224,112,32,.09)" stroke="rgba(224,112,32,.48)" stroke-width="1.5"/>
+      <ellipse cx="258" cy="108" rx="24" ry="16" transform="rotate(-42 258 108)" fill="rgba(224,112,32,.11)" stroke="rgba(224,112,32,.55)" stroke-width="1.5"/>
+      <!-- Left light chain -->
+      <path d="M435 278 C388 240 315 178 228 116" stroke="rgba(224,112,32,.3)" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <ellipse cx="307" cy="186" rx="20" ry="14" transform="rotate(-42 307 186)" fill="rgba(224,112,32,.05)" stroke="rgba(224,112,32,.28)" stroke-width="1.5"/>
+      <ellipse cx="236" cy="122" rx="20" ry="14" transform="rotate(-42 236 122)" fill="rgba(224,112,32,.06)" stroke="rgba(224,112,32,.3)" stroke-width="1.5"/>
+      <!-- Right Fab arm -->
+      <path d="M457 268 C500 230 570 168 652 100" stroke="rgba(224,112,32,.62)" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <ellipse cx="572" cy="172" rx="24" ry="16" transform="rotate(42 572 172)" fill="rgba(224,112,32,.09)" stroke="rgba(224,112,32,.48)" stroke-width="1.5"/>
+      <ellipse cx="642" cy="108" rx="24" ry="16" transform="rotate(42 642 108)" fill="rgba(224,112,32,.11)" stroke="rgba(224,112,32,.55)" stroke-width="1.5"/>
+      <!-- Right light chain -->
+      <path d="M465 278 C512 240 585 178 672 116" stroke="rgba(224,112,32,.3)" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <ellipse cx="593" cy="186" rx="20" ry="14" transform="rotate(42 593 186)" fill="rgba(224,112,32,.05)" stroke="rgba(224,112,32,.28)" stroke-width="1.5"/>
+      <ellipse cx="664" cy="122" rx="20" ry="14" transform="rotate(42 664 122)" fill="rgba(224,112,32,.06)" stroke="rgba(224,112,32,.3)" stroke-width="1.5"/>
+
+      <!-- ── LINKER + PAYLOAD LEFT ── -->
+      <path d="M236 116 L170 82" stroke="rgba(224,112,32,.55)" stroke-width="2" stroke-dasharray="5,4"/>
+      <!-- Payload molecule left -->
+      <circle cx="150" cy="66" r="18" fill="rgba(224,112,32,.09)" stroke="rgba(224,112,32,.55)" stroke-width="1.5"/>
+      <circle cx="132" cy="54" r="10" fill="rgba(224,112,32,.15)" stroke="rgba(224,112,32,.62)" stroke-width="1.5"/>
+      <circle cx="168" cy="54" r="10" fill="rgba(224,112,32,.15)" stroke="rgba(224,112,32,.62)" stroke-width="1.5"/>
+      <circle cx="150" cy="38" r="10" fill="rgba(224,112,32,.15)" stroke="rgba(224,112,32,.62)" stroke-width="1.5"/>
+      <line x1="132" y1="54" x2="150" y2="66" stroke="rgba(224,112,32,.6)" stroke-width="1.5"/>
+      <line x1="168" y1="54" x2="150" y2="66" stroke="rgba(224,112,32,.6)" stroke-width="1.5"/>
+      <line x1="150" y1="38" x2="150" y2="66" stroke="rgba(224,112,32,.6)" stroke-width="1.5"/>
+      <circle cx="150" cy="52" r="5" fill="rgba(255,160,60,.95)"/>
+
+      <!-- ── LINKER + PAYLOAD RIGHT ── -->
+      <path d="M664 116 L730 82" stroke="rgba(224,112,32,.55)" stroke-width="2" stroke-dasharray="5,4"/>
+      <circle cx="750" cy="66" r="18" fill="rgba(224,112,32,.09)" stroke="rgba(224,112,32,.55)" stroke-width="1.5"/>
+      <circle cx="732" cy="54" r="10" fill="rgba(224,112,32,.15)" stroke="rgba(224,112,32,.62)" stroke-width="1.5"/>
+      <circle cx="768" cy="54" r="10" fill="rgba(224,112,32,.15)" stroke="rgba(224,112,32,.62)" stroke-width="1.5"/>
+      <circle cx="750" cy="38" r="10" fill="rgba(224,112,32,.15)" stroke="rgba(224,112,32,.62)" stroke-width="1.5"/>
+      <line x1="732" y1="54" x2="750" y2="66" stroke="rgba(224,112,32,.6)" stroke-width="1.5"/>
+      <line x1="768" y1="54" x2="750" y2="66" stroke="rgba(224,112,32,.6)" stroke-width="1.5"/>
+      <line x1="750" y1="38" x2="750" y2="66" stroke="rgba(224,112,32,.6)" stroke-width="1.5"/>
+      <circle cx="750" cy="52" r="5" fill="rgba(255,160,60,.95)"/>
+
+      <!-- ── CALLOUT LABELS ── -->
+      <!-- Antibody label -->
+      <line x1="450" y1="385" x2="450" y2="530" stroke="rgba(255,255,255,.15)" stroke-width="1" stroke-dasharray="3,5"/>
+      <text x="450" y="548" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="rgba(255,255,255,.72)" text-anchor="middle" letter-spacing="1">ANTIBODY</text>
+      <!-- Left Linker label -->
+      <line x1="203" y1="98" x2="85" y2="130" stroke="rgba(255,255,255,.15)" stroke-width="1" stroke-dasharray="3,5"/>
+      <text x="56" y="135" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="rgba(224,112,32,.9)" text-anchor="middle" letter-spacing=".5">LINKER</text>
+      <text x="56" y="151" font-family="Inter,sans-serif" font-size="10" fill="rgba(224,112,32,.65)" text-anchor="middle">(ConjuALL™)</text>
+      <!-- Left Payload label -->
+      <line x1="150" y1="88" x2="78" y2="32" stroke="rgba(255,255,255,.15)" stroke-width="1" stroke-dasharray="3,5"/>
+      <text x="44" y="26" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="rgba(255,255,255,.72)" text-anchor="middle" letter-spacing=".5">PAYLOAD</text>
+      <!-- Right Linker label -->
+      <line x1="697" y1="98" x2="815" y2="130" stroke="rgba(255,255,255,.15)" stroke-width="1" stroke-dasharray="3,5"/>
+      <text x="844" y="135" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="rgba(224,112,32,.9)" text-anchor="middle" letter-spacing=".5">LINKER</text>
+      <text x="844" y="151" font-family="Inter,sans-serif" font-size="10" fill="rgba(224,112,32,.65)" text-anchor="middle">(ConjuALL™)</text>
+      <!-- Right Payload label -->
+      <line x1="750" y1="88" x2="822" y2="32" stroke="rgba(255,255,255,.15)" stroke-width="1" stroke-dasharray="3,5"/>
+      <text x="856" y="26" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="rgba(255,255,255,.72)" text-anchor="middle" letter-spacing=".5">PAYLOAD</text>
+    </svg>
+  </div>
+  <div class="platform-awards rv d3">
+    <span class="award-tag">World ADC Awards 최고 플랫폼 기술상 6년 연속</span>
+    <span class="award-tag">3세대 ADC 고도화 진행 중</span>
+    <span class="award-tag">β-Glucuronidase 기반 독자 링커</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ 05 GLOBAL TRUST -->
+<section class="sec" id="trust" aria-labelledby="trustH">
+  <span class="ew rv">Global Trust</span>
+  <div class="trust-intro">
+    <h2 class="stitle rv d1" id="trustH">세계 최고의<br>제약사가 <em>선택했습니다</em></h2>
+  </div>
+  <div class="logo-wall rv d2" role="list" aria-label="글로벌 파트너">
+    <div class="logo-cell" role="listitem"><span class="logo-name">PFIZER</span><span class="logo-sub">ADC Licensee</span></div>
+    <div class="logo-cell" role="listitem"><span class="logo-name">JANSSEN</span><span class="logo-sub">Johnson &amp; Johnson</span></div>
+    <div class="logo-cell" role="listitem"><span class="logo-name">BOEHRINGER<br>INGELHEIM</span><span class="logo-sub">Platform Partner</span></div>
+    <div class="logo-cell" role="listitem"><span class="logo-name">AMGEN</span><span class="logo-sub">ADC Licensee</span></div>
+    <div class="logo-cell" role="listitem"><span class="logo-name">SAMSUNG<br>BIOLOGICS</span><span class="logo-sub">CDMO Partner</span></div>
+    <div class="logo-cell" role="listitem"><span class="logo-name">ONO<br>PHARMACEUTICAL</span><span class="logo-sub">Platform Licensee</span></div>
+  </div>
+  <div class="trust-stats">
+    <div class="tstat rv d3">
+      <div class="tstat-num"><em>10</em>조원<em>+</em></div>
+      <p class="tstat-label">누적 글로벌 기술수출 규모</p>
+    </div>
+    <div class="tstat rv d4">
+      <div class="tstat-num"><em>20+</em></div>
+      <p class="tstat-label">Global Partnerships</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ 06 PEOPLE BEHIND INNOVATION -->
+<section class="sec people-sec" id="people" aria-labelledby="peopleH">
+  <!-- Background: abstract node network suggesting team/collaboration -->
+  <svg class="people-bg" viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true">
+    <defs>
+      <radialGradient id="pg" cx="50%" cy="50%" r="55%">
+        <stop offset="0%" stop-color="#e07020" stop-opacity=".06"/>
+        <stop offset="100%" stop-color="#e07020" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="1400" height="700" fill="url(#pg)"/>
+    <!-- Node network representing the research team -->
+    <g stroke="rgba(255,255,255,.05)" stroke-width="1">
+      <line x1="1050" y1="120" x2="1180" y2="200"/><line x1="1180" y1="200" x2="1260" y2="320"/>
+      <line x1="1260" y1="320" x2="1180" y2="440"/><line x1="1180" y1="440" x2="1050" y2="520"/>
+      <line x1="1050" y1="120" x2="900" y2="180"/><line x1="900" y1="180" x2="820" y2="320"/>
+      <line x1="820" y1="320" x2="900" y2="460"/><line x1="900" y1="460" x2="1050" y2="520"/>
+      <line x1="1050" y1="120" x2="1050" y2="520"/><line x1="900" y1="180" x2="1180" y2="200"/>
+      <line x1="900" y1="460" x2="1180" y2="440"/><line x1="820" y1="320" x2="1260" y2="320"/>
+      <line x1="1180" y1="200" x2="1180" y2="440"/><line x1="900" y1="180" x2="900" y2="460"/>
+      <line x1="1050" y1="320" x2="820" y2="320"/><line x1="1050" y1="320" x2="1260" y2="320"/>
+    </g>
+    <g fill="rgba(224,112,32,.35)">
+      <circle cx="1050" cy="120" r="4"/><circle cx="1180" cy="200" r="3"/><circle cx="1260" cy="320" r="4"/>
+      <circle cx="1180" cy="440" r="3"/><circle cx="1050" cy="520" r="4"/><circle cx="900" cy="180" r="3"/>
+      <circle cx="820" cy="320" r="4"/><circle cx="900" cy="460" r="3"/><circle cx="1050" cy="320" r="6"/>
+    </g>
+  </svg>
+  <div class="people-content">
+    <p class="people-quote rv" id="peopleH">Behind Every Discovery<br>Are <em>People</em></p>
+    <p class="people-sub rv d2">기초 연구부터 임상 개발까지 — 분야를 초월한 과학자들이 한 목표를 향해 움직입니다. 18년의 연구 문화가 만든 혁신, 그것이 리가켐바이오의 가장 큰 자산입니다.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ 07 VISION 2030 -->
+<section class="sec vision-sec" id="vision" aria-labelledby="visionH">
+  <!-- Connects back to Hero -->
+  <svg class="vision-bg" viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true">
+    <defs>
+      <radialGradient id="vg" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#e07020" stop-opacity=".1"/>
+        <stop offset="100%" stop-color="#e07020" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <ellipse cx="700" cy="350" rx="480" ry="320" fill="url(#vg)"/>
+    <circle cx="700" cy="350" r="300" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+    <circle cx="700" cy="350" r="210" stroke="rgba(255,255,255,.03)" stroke-width="1" stroke-dasharray="4,10"/>
+    <circle cx="700" cy="350" r="120" stroke="rgba(255,255,255,.03)" stroke-width="1"/>
+    <circle cx="700" cy="350" r="36" fill="rgba(224,112,32,.14)"/>
+    <circle cx="700" cy="350" r="14" fill="rgba(224,112,32,.4)"/>
+  </svg>
+  <div class="vision-content">
+    <span class="vision-eyebrow rv">Vision 2030</span>
+    <h2 class="vision-h rv d1" id="visionH">Leading The Future<br>of <em>ADC Therapeutics</em></h2>
+    <div class="vision-rule rv d2"></div>
+    <p class="vision-sub rv d3">임상 진입 속도를 높이는 동시에, 차세대 모달리티 확보와 글로벌 오픈이노베이션으로 ADC 생태계의 중심에 서겠습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="ft">
+    <div>
+      <div class="fb">ligachem</div>
+      <p class="ftag">Precision ADC Technology,<br>Transforming the Future of Oncology.</p>
+      <div class="fsoc" aria-hidden="true">
+        <div class="fsc" title="Blog">𝐁</div>
+        <div class="fsc" title="YouTube">▶</div>
+        <div class="fsc" title="X">𝕏</div>
+        <div class="fsc" title="Instagram">◈</div>
+      </div>
+    </div>
+    <div>
+      <p class="fc-title">Technology</p>
+      <ul class="fc-links">
+        <li><a href="#conjuall">ConjuALL™ Platform</a></li>
+        <li><a href="index.html#technology">Small Molecule ADC</a></li>
+        <li><a href="index.html#technology">Next Generation ADC</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="fc-title">Company</p>
+      <ul class="fc-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="index.html#pipeline">Pipeline</a></li>
+        <li><a href="#">Career</a></li>
+        <li><a href="#">IR 자료실</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="fc-title">Contact</p>
+      <ul class="fc-links">
+        <li><a href="#">Partnership 문의</a></li>
+        <li><a href="#">Media Relations</a></li>
+        <li><a href="#">개인정보처리방침</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="fcopy">© 2026 LigaChem Biosciences, Inc.&nbsp;&nbsp;All rights reserved.</p>
+</footer>
+
+<script>
+// Loader
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('out'), 1300);
+});
+
+// Cursor glow
+const gl = document.getElementById('glow');
+document.addEventListener('mousemove', e => {
+  gl.style.left = e.clientX + 'px';
+  gl.style.top = e.clientY + 'px';
+}, { passive: true });
+
+// Nav scroll
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  nav.style.background = window.scrollY > 60 ? 'rgba(0,0,0,.75)' : 'rgba(0,0,0,.4)';
+}, { passive: true });
+
+// Hero parallax
+const heroBg = document.querySelector('.hero-adc');
+const heroRad = document.querySelector('.hero-radial');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (y < window.innerHeight) {
+    heroBg.style.transform = `translateY(${y * 0.28}px)`;
+    heroRad.style.transform = `translateY(${y * 0.18}px)`;
+  }
+}, { passive: true });
+
+// Reveal
+const revEls = document.querySelectorAll('.rv, .rv-l');
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); ro.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
+revEls.forEach(el => ro.observe(el));
+
+// Journey line animation
+const jline = document.getElementById('jline');
+const jro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { jline.classList.add('on'); jro.unobserve(e.target); } });
+}, { threshold: 0.3 });
+jro.observe(document.getElementById('journey'));
+
+// Smooth anchor scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>
+</body>
+</html>
